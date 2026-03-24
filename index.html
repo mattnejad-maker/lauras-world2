@@ -4,577 +4,480 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Lauras World">
-<meta name="theme-color" content="#0a0a0a">
 <title>Lauras World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+:root{--pink:#FF2D6B;--pink2:#FF6B9D;--bg:#0a0a0a;--card:#161616;--card2:#1e1e1e;--sub:#aaa;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;background:#0a0a0a;font-family:'Nunito',sans-serif;color:#fff;}
 body{display:flex;flex-direction:column;max-width:480px;margin:0 auto;}
-#app-header{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px;background:#0a0a0a;display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.header-avatar{width:52px;height:52px;flex-shrink:0;}
-.header-logo{font-size:22px;font-weight:900;background:linear-gradient(90deg,#FF2D6B,#FF6B9D,#ff9ec0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;}
-.header-sub{font-size:10px;color:#aaa;letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
-#tab-content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 80px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-#tab-content::-webkit-scrollbar{display:none;}
-#bottom-nav{flex-shrink:0;display:flex;background:#111;border-top:1px solid #222;padding-bottom:env(safe-area-inset-bottom,0px);}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;border:none;background:transparent;color:#aaa;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;gap:4px;cursor:pointer;letter-spacing:0.5px;}
-.nav-btn.active{color:#FF2D6B;}
-.nav-btn svg{width:22px;height:22px;}
-.tab-page{display:none;padding:8px 14px;}
-.tab-page.active{display:block;}
-.hero-card{background:linear-gradient(135deg,#1a0010,#2a001a);border:1px solid rgba(255,45,107,0.3);border-radius:22px;padding:20px;margin-bottom:14px;}
-.hero-greeting{font-size:26px;font-weight:900;margin-bottom:4px;}
-.hero-greeting span{color:#FF2D6B;}
-.hero-date{font-size:12px;color:#aaa;margin-bottom:10px;}
-.hero-quote{font-size:13px;color:#ddd;line-height:1.5;font-style:italic;border-left:3px solid #FF2D6B;padding-left:10px;}
-.ring-row{display:flex;align-items:center;gap:16px;margin-bottom:12px;background:#161616;border-radius:18px;padding:16px;}
-.ring-label{font-size:10px;color:#aaa;margin-top:6px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center;}
-.stat-col{flex:1;display:flex;flex-direction:column;gap:8px;}
-.stat-box{background:#1e1e1e;border-radius:14px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;}
-.stat-box .lbl{font-size:12px;color:#aaa;font-weight:700;}
-.stat-box .val{font-size:20px;font-weight:900;}
-.water-card{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
-.water-title{font-size:14px;font-weight:800;margin-bottom:10px;}
-.water-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
-.water-num{font-size:32px;font-weight:900;color:#00B4D8;text-align:center;flex:1;}
-.water-sub{font-size:11px;color:#aaa;text-align:center;}
-.btn-circle{width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(135deg,#FF2D6B,#FF6B9D);color:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.prog-wrap{background:#222;border-radius:99px;height:8px;overflow:hidden;margin-top:6px;}
-.prog-fill{height:100%;border-radius:99px;transition:width 0.4s;}
-.sec-title{font-size:16px;font-weight:900;margin:14px 0 10px;color:#FF2D6B;}
-.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.cat-card{background:#161616;border-radius:16px;padding:14px 12px;cursor:pointer;}
-.cat-icon{font-size:22px;margin-bottom:6px;}
-.cat-name{font-size:12px;font-weight:800;margin-bottom:6px;line-height:1.2;}
-.cat-pct{font-size:18px;font-weight:900;margin-bottom:4px;}
-.tip-card{background:linear-gradient(135deg,#0d1a1f,#0a1520);border:1px solid rgba(0,180,216,0.3);border-radius:18px;padding:16px;margin-bottom:12px;}
-.tip-title{font-size:13px;font-weight:800;color:#00B4D8;margin-bottom:8px;}
-.tip-text{font-size:12px;color:#ccc;line-height:1.7;}
-.task-cat-row{background:#161616;border-radius:18px;padding:16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid #222;}
-.task-cat-ico{font-size:28px;flex-shrink:0;}
-.task-cat-info{flex:1;}
-.task-cat-name{font-size:15px;font-weight:800;margin-bottom:4px;}
-.task-cat-sub{font-size:11px;color:#aaa;}
-.task-cat-pct{font-size:20px;font-weight:900;flex-shrink:0;}
-#task-detail{display:none;padding:0 14px 8px;}
-.back-btn{display:flex;align-items:center;gap:8px;background:transparent;border:none;color:#FF2D6B;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;padding:10px 0 14px;}
-.task-item{background:#161616;border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid #222;}
-.task-top{display:flex;align-items:flex-start;gap:10px;}
-.chk{width:22px;height:22px;border-radius:6px;border:2px solid #FF2D6B;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;background:transparent;margin-top:1px;}
-.chk.on{background:#FF2D6B;}
-.chk.on::after{content:'checkmark';font-size:0;color:#fff;}
-.chk.on::before{content:'✓';color:#fff;font-size:13px;font-weight:900;}
-.task-info{flex:1;}
-.task-name{font-size:14px;font-weight:800;line-height:1.3;}
-.task-name.done{opacity:0.5;text-decoration:line-through;}
-.task-time{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:3px 0;opacity:0.7;}
-.task-detail-txt{font-size:12px;color:#bbb;line-height:1.5;margin-top:6px;}
-.task-remove{background:transparent;border:1px solid #333;border-radius:8px;color:#666;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;font-family:'Nunito',sans-serif;margin-top:8px;}
-.add-btn{width:100%;padding:14px;border-radius:14px;border:2px dashed #FF2D6B;background:transparent;color:#FF2D6B;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:4px;}
-.add-form{background:#1e1e1e;border-radius:16px;padding:16px;margin-top:10px;display:none;}
-.finput{width:100%;padding:12px;border-radius:10px;border:1px solid #333;background:#111;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;margin-bottom:10px;outline:none;}
-.fsub{width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(90deg,#FF2D6B,#FF6B9D);color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
-.exp-card{background:#161616;border-radius:18px;margin-bottom:10px;overflow:hidden;border:1px solid #222;}
-.exp-head{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;}
-.exp-emoji{font-size:26px;flex-shrink:0;}
-.exp-info{flex:1;}
-.exp-name{font-size:15px;font-weight:800;}
-.exp-role{font-size:11px;color:#aaa;margin-top:2px;}
-.exp-chev{color:#aaa;font-size:16px;transition:transform 0.3s;flex-shrink:0;}
-.exp-card.open .exp-chev{transform:rotate(180deg);}
-.exp-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
-.exp-card.open .exp-body{max-height:600px;}
-.exp-body-inner{padding:0 16px 16px;}
-.exp-bullet{font-size:12px;color:#ccc;line-height:1.6;padding:5px 0;border-bottom:1px solid #222;display:flex;gap:8px;}
-.exp-bullet:last-child{border-bottom:none;}
-.score-sec{display:flex;flex-direction:column;align-items:center;padding:20px 0 10px;}
-.score-sub{font-size:12px;color:#aaa;margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
-.week-card{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
-.week-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:14px;}
-.wbar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.wbar-bg{flex:1;width:100%;background:#222;border-radius:6px;display:flex;align-items:flex-end;overflow:hidden;}
-.wbar-fill{width:100%;border-radius:6px;transition:height 0.5s;}
-.wday{font-size:9px;color:#aaa;font-weight:700;}
-.prog-sec{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
-.prog-row{margin-bottom:12px;}
-.prog-row:last-child{margin-bottom:0;}
-.prog-row-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-.prog-row-name{font-size:12px;font-weight:800;}
-.prog-row-pct{font-size:12px;font-weight:700;}
-.steps-card{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
-.steps-num{font-size:36px;font-weight:900;color:#FF2D6B;text-align:center;margin:4px 0;}
-.steps-goal{font-size:11px;color:#aaa;text-align:center;margin-bottom:10px;}
-.steps-btns{display:flex;gap:10px;margin-top:12px;}
-.steps-btn{flex:1;padding:12px;border-radius:12px;border:none;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
-.steps-btn.add{background:linear-gradient(135deg,#FF2D6B,#FF6B9D);color:#fff;}
-.steps-btn.sub{background:#222;color:#aaa;}
+#hdr{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px;background:#0a0a0a;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.hlogo{font-size:22px;font-weight:900;background:linear-gradient(90deg,#FF2D6B,#FF6B9D,#ffb3cc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hsub{font-size:10px;color:#aaa;letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+#content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+#content::-webkit-scrollbar{display:none;}
+#nav{flex-shrink:0;display:flex;background:#111;border-top:1px solid #222;padding-bottom:env(safe-area-inset-bottom,0px);}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;border:none;background:transparent;color:#aaa;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;gap:4px;cursor:pointer;}
+.nb.on{color:#FF2D6B;}
+.nb svg{width:22px;height:22px;}
+.pg{display:none;padding:8px 14px 80px;}
+.pg.on{display:block;}
+.hero{background:linear-gradient(135deg,#1a0010,#2a001a);border:1px solid rgba(255,45,107,0.3);border-radius:22px;padding:20px;margin-bottom:14px;}
+.hhi{font-size:26px;font-weight:900;margin-bottom:4px;}
+.hhi b{color:#FF2D6B;}
+.hdt{font-size:12px;color:#aaa;margin-bottom:10px;}
+.hqt{font-size:13px;color:#ddd;line-height:1.5;font-style:italic;border-left:3px solid #FF2D6B;padding-left:10px;}
+.rrow{display:flex;align-items:center;gap:16px;margin-bottom:12px;background:#161616;border-radius:18px;padding:16px;}
+.scol{flex:1;display:flex;flex-direction:column;gap:8px;}
+.sb{background:#1e1e1e;border-radius:14px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;}
+.sl{font-size:12px;color:#aaa;font-weight:700;}
+.sv{font-size:20px;font-weight:900;}
+.wc{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
+.wt{font-size:14px;font-weight:800;margin-bottom:10px;}
+.wr{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.wn{font-size:32px;font-weight:900;color:#00B4D8;text-align:center;flex:1;}
+.ws{font-size:11px;color:#aaa;text-align:center;}
+.bc{width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(135deg,#FF2D6B,#FF6B9D);color:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pb{background:#222;border-radius:99px;height:8px;overflow:hidden;margin-top:6px;}
+.pf{height:100%;border-radius:99px;}
+.st{font-size:16px;font-weight:900;margin:14px 0 10px;color:#FF2D6B;}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.cc{background:#161616;border-radius:16px;padding:14px 12px;cursor:pointer;}
+.ci{font-size:22px;margin-bottom:6px;}
+.cn{font-size:12px;font-weight:800;margin-bottom:6px;line-height:1.2;}
+.cp{font-size:18px;font-weight:900;margin-bottom:4px;}
+.tip{background:linear-gradient(135deg,#0d1a1f,#0a1520);border:1px solid rgba(0,180,216,0.3);border-radius:18px;padding:16px;margin-bottom:12px;}
+.tit{font-size:13px;font-weight:800;color:#00B4D8;margin-bottom:8px;}
+.ttx{font-size:12px;color:#ccc;line-height:1.7;}
+.tcr{background:#161616;border-radius:18px;padding:16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid #222;}
+.tci{font-size:28px;flex-shrink:0;}
+.tcn{font-size:15px;font-weight:800;margin-bottom:4px;}
+.tcs{font-size:11px;color:#aaa;}
+.tcp{font-size:20px;font-weight:900;flex-shrink:0;}
+#det{display:none;padding:8px 14px 80px;}
+.bbtn{display:flex;align-items:center;gap:8px;background:transparent;border:none;color:#FF2D6B;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;padding:10px 0 14px;}
+.ti{background:#161616;border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid #222;}
+.tt{display:flex;align-items:flex-start;gap:10px;}
+.ck{width:22px;height:22px;border-radius:6px;border:2px solid #FF2D6B;flex-shrink:0;cursor:pointer;margin-top:1px;background:transparent;}
+.ck.on{background:#FF2D6B;border-color:#FF2D6B;display:flex;align-items:center;justify-content:center;}
+.ck.on::before{content:'✓';color:#fff;font-size:13px;font-weight:900;}
+.tn{font-size:14px;font-weight:800;line-height:1.3;}
+.tn.dn{opacity:0.5;text-decoration:line-through;}
+.tm{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:3px 0;opacity:0.7;}
+.td{font-size:12px;color:#bbb;line-height:1.5;margin-top:6px;}
+.tr{background:transparent;border:1px solid #333;border-radius:8px;color:#666;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;font-family:'Nunito',sans-serif;margin-top:8px;}
+.addb{width:100%;padding:14px;border-radius:14px;border:2px dashed #FF2D6B;background:transparent;color:#FF2D6B;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:4px;}
+.adf{background:#1e1e1e;border-radius:16px;padding:16px;margin-top:10px;display:none;}
+.fi{width:100%;padding:12px;border-radius:10px;border:1px solid #333;background:#111;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;margin-bottom:10px;outline:none;}
+.fs{width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(90deg,#FF2D6B,#FF6B9D);color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
+.ec{background:#161616;border-radius:18px;margin-bottom:10px;overflow:hidden;border:1px solid #222;}
+.eh{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;}
+.ee{font-size:26px;flex-shrink:0;}
+.en{font-size:15px;font-weight:800;}
+.er{font-size:11px;color:#aaa;margin-top:2px;}
+.ev{color:#aaa;font-size:16px;transition:transform 0.3s;flex-shrink:0;}
+.ec.op .ev{transform:rotate(180deg);}
+.eb{max-height:0;overflow:hidden;transition:max-height 0.35s;}
+.ec.op .eb{max-height:600px;}
+.ebi{padding:0 16px 16px;}
+.ebl{font-size:12px;color:#ccc;line-height:1.6;padding:5px 0;border-bottom:1px solid #222;display:flex;gap:8px;}
+.ebl:last-child{border-bottom:none;}
+.ss{display:flex;flex-direction:column;align-items:center;padding:20px 0 10px;}
+.ssb{font-size:12px;color:#aaa;margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
+.wk{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
+.wb{display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:14px;}
+.wbw{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.wbb{flex:1;width:100%;background:#222;border-radius:6px;display:flex;align-items:flex-end;overflow:hidden;}
+.wbf{width:100%;border-radius:6px;}
+.wbd{font-size:9px;color:#aaa;font-weight:700;}
+.ps{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
+.pr{margin-bottom:12px;}
+.pr:last-child{margin-bottom:0;}
+.prt{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.prn{font-size:12px;font-weight:800;}
+.prp{font-size:12px;font-weight:700;}
+.stc{background:#161616;border-radius:18px;padding:16px;margin-bottom:12px;}
+.stn{font-size:36px;font-weight:900;color:#FF2D6B;text-align:center;margin:4px 0;}
+.stg{font-size:11px;color:#aaa;text-align:center;margin-bottom:10px;}
+.stb{display:flex;gap:10px;margin-top:12px;}
+.sbtn{flex:1;padding:12px;border-radius:12px;border:none;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
+.sbtn.a{background:linear-gradient(135deg,#FF2D6B,#FF6B9D);color:#fff;}
+.sbtn.s{background:#222;color:#aaa;}
 #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:linear-gradient(90deg,#FF2D6B,#FF6B9D);color:#fff;padding:12px 24px;border-radius:99px;font-size:14px;font-weight:800;z-index:999;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;box-shadow:0 8px 24px rgba(255,45,107,0.5);}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
-
-<div id="app-header">
-  <svg class="header-avatar" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="26" cy="44" rx="13" ry="8" fill="#FF2D6B" opacity="0.7"/>
-    <rect x="23" y="32" width="6" height="8" rx="3" fill="#FDBCB4"/>
-    <circle cx="26" cy="24" r="12" fill="#FDBCB4"/>
-    <path d="M14 22 Q14 8 26 8 Q38 8 38 22 Q36 12 26 12 Q16 12 14 22Z" fill="#FFD700"/>
-    <path d="M14 22 Q12 28 14 34 Q17 26 16 20Z" fill="#FFD700"/>
-    <path d="M38 22 Q40 28 38 34 Q35 26 36 20Z" fill="#FFD700"/>
-    <rect x="15" y="21" width="9" height="6" rx="3" fill="#FF2D6B" opacity="0.9"/>
-    <rect x="28" y="21" width="9" height="6" rx="3" fill="#FF2D6B" opacity="0.9"/>
-    <line x1="24" y1="24" x2="28" y2="24" stroke="#FF2D6B" stroke-width="1.5"/>
-    <rect x="16" y="22" width="7" height="4" rx="2" fill="#FF6B9D" opacity="0.6"/>
-    <rect x="29" y="22" width="7" height="4" rx="2" fill="#FF6B9D" opacity="0.6"/>
-    <path d="M22 30 Q26 34 30 30" stroke="#e0888a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <circle cx="14" cy="26" r="1.5" fill="#FF2D6B"/>
-    <ellipse cx="14" cy="30" rx="1" ry="2.5" fill="#FF2D6B" opacity="0.8"/>
-    <circle cx="38" cy="26" r="1.5" fill="#FF2D6B"/>
-    <ellipse cx="38" cy="30" rx="1" ry="2.5" fill="#FF2D6B" opacity="0.8"/>
-  </svg>
-  <div>
-    <div class="header-logo">Lauras World</div>
-    <div class="header-sub">Healing &middot; Strength &middot; Wellness</div>
-  </div>
+<div id="hdr">
+<svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+<ellipse cx="26" cy="44" rx="13" ry="8" fill="#FF2D6B" opacity="0.7"/>
+<rect x="23" y="32" width="6" height="8" rx="3" fill="#FDBCB4"/>
+<circle cx="26" cy="24" r="12" fill="#FDBCB4"/>
+<path d="M14 22 Q14 8 26 8 Q38 8 38 22 Q36 12 26 12 Q16 12 14 22Z" fill="#FFD700"/>
+<path d="M14 22 Q12 28 14 34 Q17 26 16 20Z" fill="#FFD700"/>
+<path d="M38 22 Q40 28 38 34 Q35 26 36 20Z" fill="#FFD700"/>
+<rect x="15" y="21" width="9" height="6" rx="3" fill="#FF2D6B" opacity="0.9"/>
+<rect x="28" y="21" width="9" height="6" rx="3" fill="#FF2D6B" opacity="0.9"/>
+<line x1="24" y1="24" x2="28" y2="24" stroke="#FF2D6B" stroke-width="1.5"/>
+<rect x="16" y="22" width="7" height="4" rx="2" fill="#FF6B9D" opacity="0.6"/>
+<rect x="29" y="22" width="7" height="4" rx="2" fill="#FF6B9D" opacity="0.6"/>
+<path d="M22 30 Q26 34 30 30" stroke="#e0888a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<circle cx="14" cy="26" r="1.5" fill="#FF2D6B"/>
+<ellipse cx="14" cy="30" rx="1" ry="2.5" fill="#FF2D6B" opacity="0.8"/>
+<circle cx="38" cy="26" r="1.5" fill="#FF2D6B"/>
+<ellipse cx="38" cy="30" rx="1" ry="2.5" fill="#FF2D6B" opacity="0.8"/>
+</svg>
+<div><div class="hlogo">Lauras World</div><div class="hsub">Healing &middot; Strength &middot; Wellness</div></div>
 </div>
 
-<div id="tab-content">
-  <div id="tab-home" class="tab-page active"></div>
-  <div id="tab-tasks" class="tab-page"></div>
-  <div id="task-detail"></div>
-  <div id="tab-experts" class="tab-page"></div>
-  <div id="tab-progress" class="tab-page"></div>
+<div id="content">
+<div id="ph" class="pg on">
+<div class="hero">
+<div class="hhi">Hey <b>Laura!</b> &#x1F338;</div>
+<div class="hdt" id="hdate"></div>
+<div class="hqt" id="hquote"></div>
+</div>
+<div class="rrow">
+<div style="flex-shrink:0;text-align:center;">
+<svg id="ring-svg" width="110" height="110" viewBox="0 0 110 110">
+<circle cx="55" cy="55" r="45" fill="none" stroke="#222" stroke-width="10"/>
+<circle id="ring-prog" cx="55" cy="55" r="45" fill="none" stroke="#FF2D6B" stroke-width="10" stroke-dasharray="0 283" stroke-linecap="round" transform="rotate(-90 55 55)"/>
+<text id="ring-txt" x="55" y="57" text-anchor="middle" dominant-baseline="middle" fill="#FF2D6B" font-size="22" font-weight="900" font-family="Nunito,sans-serif">0%</text>
+</svg>
+<div style="font-size:10px;color:#aaa;margin-top:6px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Todays Healing</div>
+</div>
+<div class="scol">
+<div class="sb"><span class="sl">Done</span><span class="sv" id="s-done" style="color:#00C853;">0</span></div>
+<div class="sb"><span class="sl">Left</span><span class="sv" id="s-left" style="color:#FF2D6B;">0</span></div>
+<div class="sb"><span class="sl">Steps</span><span class="sv" id="s-steps" style="color:#FFD600;">0</span></div>
+</div>
+</div>
+<div class="wc">
+<div class="wt">&#x1F4A7; Water Intake</div>
+<div class="wr">
+<button class="bc" onclick="wchg(-1)">-</button>
+<div><div class="wn" id="wnum">0</div><div class="ws">of 10 glasses</div></div>
+<button class="bc" onclick="wchg(1)">+</button>
+</div>
+<div class="pb"><div class="pf" id="wbar" style="width:0%;background:linear-gradient(90deg,#00B4D8,#48cae4);"></div></div>
+</div>
+<div class="st">Todays Categories</div>
+<div class="cg" id="catgrid"></div>
+<div class="tip">
+<div class="tit">&#x26A1; POTS Morning Protocol</div>
+<div class="ttx">1. Drink electrolytes BEFORE getting up<br>2. Do 10 ankle pumps in bed<br>3. Sit at bed edge for 60 seconds<br>4. Put on compression stockings while seated<br>5. Rise slowly and have a wall or chair nearby</div>
+</div>
 </div>
 
-<div id="bottom-nav">
-  <button class="nav-btn active" onclick="switchTab('home',this)">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home
-  </button>
-  <button class="nav-btn" onclick="switchTab('tasks',this)">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h2v2H3zm4 0h14v2H7zM3 11h2v2H3zm4 0h14v2H7zM3 17h2v2H3zm4 0h14v2H7z"/></svg>Tasks
-  </button>
-  <button class="nav-btn" onclick="switchTab('experts',this)">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>Experts
-  </button>
-  <button class="nav-btn" onclick="switchTab('progress',this)">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>Progress
-  </button>
+<div id="pt" class="pg">
+<div class="st">Task Categories</div>
+<div id="catlist"></div>
 </div>
 
+<div id="det"></div>
+
+<div id="pe" class="pg">
+<div class="st">Your Expert Team</div>
+<div id="explist"></div>
+</div>
+
+<div id="pp" class="pg">
+<div class="ss">
+<svg id="score-svg" width="150" height="150" viewBox="0 0 150 150">
+<circle cx="75" cy="75" r="61" fill="none" stroke="#222" stroke-width="14"/>
+<circle id="score-prog" cx="75" cy="75" r="61" fill="none" stroke="#FF2D6B" stroke-width="14" stroke-dasharray="0 383" stroke-linecap="round" transform="rotate(-90 75 75)"/>
+<text id="score-txt" x="75" y="77" text-anchor="middle" dominant-baseline="middle" fill="#FF2D6B" font-size="30" font-weight="900" font-family="Nunito,sans-serif">0%</text>
+</svg>
+<div class="ssb">Healing Score Today</div>
+</div>
+<div class="wk">
+<div style="font-size:14px;font-weight:800;">&#x1F4C5; Weekly Progress</div>
+<div class="wb" id="weekbars"></div>
+</div>
+<div class="ps" id="catprog"></div>
+<div class="stc">
+<div style="font-size:14px;font-weight:800;margin-bottom:10px;">&#x1F9B6; Daily Steps</div>
+<div class="stn" id="stepnum">0</div>
+<div class="stg">Goal: 5,000 steps</div>
+<div class="pb"><div class="pf" id="stepbar" style="width:0%;background:linear-gradient(90deg,#7C4DFF,#b39ddb);"></div></div>
+<div class="stb">
+<button class="sbtn s" onclick="schg(-250)">-250</button>
+<button class="sbtn a" onclick="schg(250)">+250</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav">
+<button class="nb on" id="nb-h" onclick="sw('h',this)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</button>
+<button class="nb" id="nb-t" onclick="sw('t',this)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h2v2H3zm4 0h14v2H7zM3 11h2v2H3zm4 0h14v2H7zM3 17h2v2H3zm4 0h14v2H7z"/></svg>Tasks</button>
+<button class="nb" id="nb-e" onclick="sw('e',this)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>Experts</button>
+<button class="nb" id="nb-p" onclick="sw('p',this)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>Progress</button>
+</div>
 <div id="toast"></div>
 
 <script>
-var CATS = [
-  {id:"supps",name:"Supplements",emoji:"&#x1F48A;",color:"#FF2D6B",tasks:[
-    {id:"s1",name:"Vitamin D3 + K2 (5000 IU)",time:"Morning",detail:"Gary Brecka: D3 deficiency directly linked to autoimmune disorders and fatigue"},
-    {id:"s2",name:"Methylated B12 + B9",time:"Morning",detail:"Gary Brecka: Bypasses MTHFR mutations. Brands: Thorne or Pure Encapsulations"},
-    {id:"s3",name:"Omega-3 Fish Oil (2000-3000mg)",time:"Morning",detail:"Anti-inflammatory, supports dryness and nerve repair. Take with a meal"},
-    {id:"s4",name:"Magnesium Glycinate (400mg)",time:"Evening",detail:"Dr. Berg: Calms nervous system, supports sleep"},
-    {id:"s5",name:"Probiotic L reuteri and B infantis",time:"Morning",detail:"Dr. Berg: Critical immune-regulating strains. Essential for T-reg cell function"},
-    {id:"s6",name:"Vitamin B1 Benfotiamine",time:"Morning",detail:"Dr. Berg: Fat-soluble B1 that penetrates nerves. Crucial for vagus nerve and ANS"},
-    {id:"s7",name:"Ashwagandha (600mg)",time:"Evening",detail:"Gary Brecka: Lowers cortisol by 30%, improves sleep, reduces anxiety"},
-    {id:"s8",name:"CoQ10 (200mg)",time:"Morning",detail:"Mitochondrial support for fatigue"},
-    {id:"s9",name:"Electrolytes LMNT or NormaLyte",time:"Morning",detail:"CRITICAL for POTS. Drink before getting out of bed"},
-    {id:"s10",name:"Vitamin C (1000mg)",time:"Morning",detail:"Dr. Ardis: Immune fortification, antioxidant protection"},
-    {id:"s11",name:"Taurine (500-1000mg)",time:"Afternoon",detail:"Dr. Ardis: Supports heart and autonomic nervous system"},
-    {id:"s12",name:"Zinc and Selenium",time:"Morning",detail:"Dr. Ardis: Daily immune stack for autoimmune and chronic inflammation"}
-  ]},
-  {id:"vagus",name:"Vagus Nerve",emoji:"&#x1F32C;",color:"#FF2D6B",tasks:[
-    {id:"v1",name:"Morning Coherent Breathing 5 min",time:"Morning",detail:"Dave Asprey: 5-6 breaths per min. 91% of dysautonomia patients restored ANS function"},
-    {id:"v2",name:"Diaphragmatic Breathing 10 min",time:"Morning",detail:"4 counts in, 6-8 counts out. Activates parasympathetic system"},
-    {id:"v3",name:"Cold Water Face Splash",time:"Morning",detail:"Activates dive reflex, directly tones vagus nerve"},
-    {id:"v4",name:"Humming or Gargling 5 min",time:"Morning",detail:"Vibrates vagus nerve in the throat. Gargle 30 sec x3 or hum a song"},
-    {id:"v5",name:"Singing",time:"Afternoon",detail:"Same vagal mechanism as humming. Play your favorite music and sing"},
-    {id:"v6",name:"Evening Wind-Down Breathing",time:"Evening",detail:"Coherent breathing before bed. Shifts out of fight-or-flight"},
-    {id:"v7",name:"Meditation or Mindfulness 10 min",time:"Evening",detail:"Insight Timer or Othership app"}
-  ]},
-  {id:"hydro",name:"Hydration",emoji:"&#x1F4A7;",color:"#00B4D8",tasks:[
-    {id:"h1",name:"Pre-Rise 500ml electrolyte water",time:"Morning",detail:"Drink BEFORE standing up. Non-negotiable for POTS"},
-    {id:"h2",name:"Morning Rise Routine ankle pumps",time:"Morning",detail:"10 ankle pumps then sit on bed edge 60 sec BEFORE standing"},
-    {id:"h3",name:"Water Goal 2.5 liters today",time:"All Day",detail:"Add electrolytes to at least 2 glasses"},
-    {id:"h4",name:"Celtic Sea Salt on meals",time:"All Day",detail:"More sodium helps retain fluid and stabilize POTS symptoms"},
-    {id:"h5",name:"Compression garments before standing",time:"Morning",detail:"Put on compression stockings BEFORE getting out of bed"},
-    {id:"h6",name:"Afternoon electrolyte drink",time:"Afternoon",detail:"Second electrolyte dose mid-afternoon"}
-  ]},
-  {id:"diet",name:"Anti-Inflam Diet",emoji:"&#x1F957;",color:"#00C853",tasks:[
-    {id:"d1",name:"Small frequent meals only",time:"All Day",detail:"Large meals worsen GI dysmotility and POTS. Aim for 5-6 small meals"},
-    {id:"d2",name:"Omega-3 protein salmon and sardines",time:"Lunch",detail:"Anti-inflammatory fats. At least 3x per week"},
-    {id:"d3",name:"Colorful veggies spinach and beets",time:"Lunch",detail:"Aim for 5 or more colors daily"},
-    {id:"d4",name:"Berries blueberries and cherries",time:"Morning",detail:"High antioxidant density. Add to smoothie or eat as snack"},
-    {id:"d5",name:"Bone broth or fermented food",time:"Lunch",detail:"Bone broth heals gut lining. Kimchi and sauerkraut repopulate gut"},
-    {id:"d6",name:"Turmeric and black pepper",time:"All Day",detail:"Black pepper increases curcumin absorption by 2000 percent"},
-    {id:"d7",name:"NO caffeine today",time:"All Day",detail:"POTS trigger. Replace with herbal tea"},
-    {id:"d8",name:"NO refined sugar today",time:"All Day",detail:"Sugar fuels inflammation and feeds harmful gut bacteria"},
-    {id:"d9",name:"Gluten-free today",time:"All Day",detail:"Dr. Berg: Gluten is a primary gut permeability trigger"}
-  ]},
-  {id:"move",name:"Movement",emoji:"&#x1F3C3;",color:"#7C4DFF",tasks:[
-    {id:"m1",name:"Horizontal exercise or recumbent bike",time:"Morning",detail:"POTS Protocol: Upright exercise triggers symptoms. Start horizontal"},
-    {id:"m2",name:"Gentle floor stretching 10 min",time:"Morning",detail:"Legs-up-the-wall pose is especially good for venous return"},
-    {id:"m3",name:"Short walk 5-15 min",time:"Afternoon",detail:"Wear compression. Stop if dizzy. Progress weekly"},
-    {id:"m4",name:"Legs-up-the-wall pose 10 min",time:"Evening",detail:"Drains blood from legs back to core. Helps POTS immediately"},
-    {id:"m5",name:"No prolonged standing",time:"All Day",detail:"Avoid standing still for more than a few minutes"}
-  ]},
-  {id:"sleep",name:"Sleep",emoji:"&#x1F319;",color:"#FF9800",tasks:[
-    {id:"sl1",name:"Screens off 1 hour before bed",time:"Evening",detail:"Blue light suppresses melatonin and keeps ANS activated"},
-    {id:"sl2",name:"Head of bed elevated 4-6 inches",time:"Evening",detail:"Reduces nighttime POTS symptoms and acid reflux"},
-    {id:"sl3",name:"Room cool 65-68F and dark",time:"Evening",detail:"Heat worsens POTS. Blackout curtains recommended"},
-    {id:"sl4",name:"Consistent sleep and wake time",time:"Evening",detail:"Irregular sleep destroys circadian rhythm and spikes inflammation"},
-    {id:"sl5",name:"Magnesium glycinate before bed",time:"Evening",detail:"400mg 30 min before sleep. Deepens sleep, reduces cortisol"},
-    {id:"sl6",name:"Target 8-9 hours tonight",time:"Evening",detail:"Sleep debt drives autoimmune flares. Non-negotiable"}
-  ]},
-  {id:"bio",name:"Biohacks",emoji:"&#x26A1;",color:"#FFD600",tasks:[
-    {id:"b1",name:"Red Light Therapy 10-20 min",time:"Morning",detail:"Dave Asprey: Reduces inflammation, promotes cellular healing"},
-    {id:"b2",name:"Far-Infrared Sauna 10-15 min",time:"Afternoon",detail:"Powerful for inflammation. POTS caution: stay hydrated"},
-    {id:"b3",name:"HRV Check",time:"Morning",detail:"Heart Rate Variability measures vagal tone. App: Welltory or WHOOP"},
-    {id:"b4",name:"Gratitude or Journaling 5 min",time:"Evening",detail:"Write 3 things grateful for. Reduces cortisol"},
-    {id:"b5",name:"Morning Sunlight 10-15 min",time:"Morning",detail:"Natural Vitamin D synthesis and circadian rhythm reset"}
-  ]}
+var QUOTES=["Every small step forward is a victory worth celebrating.","Your body is healing more than you know. Trust the process.","Strength is not the absence of struggle. It is rising through it.","You are not your diagnosis. You are so much more.","Rest is productive. Recovery is real work.","Today I choose healing. Today I choose myself.","Progress is progress, no matter how slow.","You have survived 100% of your hard days. This one is no different."];
+var CATS=[
+{id:"supps",name:"Supplements",emoji:"&#x1F48A;",color:"#FF2D6B",tasks:[
+{id:"s1",name:"Vitamin D3 + K2 (5000 IU)",time:"Morning",detail:"Gary Brecka: D3 deficiency directly linked to autoimmune disorders and fatigue"},
+{id:"s2",name:"Methylated B12 + B9",time:"Morning",detail:"Gary Brecka: Bypasses MTHFR mutations. Brands: Thorne or Pure Encapsulations"},
+{id:"s3",name:"Omega-3 Fish Oil (2000-3000mg)",time:"Morning",detail:"Anti-inflammatory, supports dryness and nerve repair. Take with a meal"},
+{id:"s4",name:"Magnesium Glycinate (400mg)",time:"Evening",detail:"Dr. Berg: Calms nervous system, supports sleep"},
+{id:"s5",name:"Probiotic L reuteri and B infantis",time:"Morning",detail:"Dr. Berg: Critical immune-regulating strains. Essential for T-reg cell function"},
+{id:"s6",name:"Vitamin B1 Benfotiamine",time:"Morning",detail:"Dr. Berg: Fat-soluble B1 that penetrates nerves. Crucial for vagus nerve and ANS"},
+{id:"s7",name:"Ashwagandha (600mg)",time:"Evening",detail:"Gary Brecka: Lowers cortisol by 30%, improves sleep, reduces anxiety"},
+{id:"s8",name:"CoQ10 (200mg)",time:"Morning",detail:"Mitochondrial support for fatigue"},
+{id:"s9",name:"Electrolytes LMNT or NormaLyte",time:"Morning",detail:"CRITICAL for POTS. Drink before getting out of bed"},
+{id:"s10",name:"Vitamin C (1000mg)",time:"Morning",detail:"Dr. Ardis: Immune fortification, antioxidant protection"},
+{id:"s11",name:"Taurine (500-1000mg)",time:"Afternoon",detail:"Dr. Ardis: Supports heart and autonomic nervous system"},
+{id:"s12",name:"Zinc and Selenium",time:"Morning",detail:"Dr. Ardis: Daily immune stack for autoimmune and chronic inflammation"}
+]},
+{id:"vagus",name:"Vagus Nerve",emoji:"&#x1F32C;",color:"#FF2D6B",tasks:[
+{id:"v1",name:"Morning Coherent Breathing 5 min",time:"Morning",detail:"Dave Asprey: 5-6 breaths per min. 91% of dysautonomia patients restored ANS function"},
+{id:"v2",name:"Diaphragmatic Breathing 10 min",time:"Morning",detail:"4 counts in, 6-8 counts out. Activates parasympathetic system"},
+{id:"v3",name:"Cold Water Face Splash",time:"Morning",detail:"Activates dive reflex, directly tones vagus nerve"},
+{id:"v4",name:"Humming or Gargling 5 min",time:"Morning",detail:"Vibrates vagus nerve in the throat. Gargle 30 sec x3 or hum a song"},
+{id:"v5",name:"Singing",time:"Afternoon",detail:"Same vagal mechanism as humming. Play your favorite music and sing"},
+{id:"v6",name:"Evening Wind-Down Breathing",time:"Evening",detail:"Coherent breathing before bed. Shifts out of fight-or-flight"},
+{id:"v7",name:"Meditation or Mindfulness 10 min",time:"Evening",detail:"Insight Timer or Othership app"}
+]},
+{id:"hydro",name:"Hydration",emoji:"&#x1F4A7;",color:"#00B4D8",tasks:[
+{id:"h1",name:"Pre-Rise 500ml electrolyte water",time:"Morning",detail:"Drink BEFORE standing up. Non-negotiable for POTS"},
+{id:"h2",name:"Morning Rise Routine ankle pumps",time:"Morning",detail:"10 ankle pumps then sit on bed edge 60 sec BEFORE standing"},
+{id:"h3",name:"Water Goal 2.5 liters today",time:"All Day",detail:"Add electrolytes to at least 2 glasses"},
+{id:"h4",name:"Celtic Sea Salt on meals",time:"All Day",detail:"More sodium helps retain fluid and stabilize POTS symptoms"},
+{id:"h5",name:"Compression garments before standing",time:"Morning",detail:"Put on compression stockings BEFORE getting out of bed"},
+{id:"h6",name:"Afternoon electrolyte drink",time:"Afternoon",detail:"Second electrolyte dose mid-afternoon"}
+]},
+{id:"diet",name:"Anti-Inflam Diet",emoji:"&#x1F957;",color:"#00C853",tasks:[
+{id:"d1",name:"Small frequent meals only",time:"All Day",detail:"Large meals worsen GI dysmotility and POTS. Aim for 5-6 small meals"},
+{id:"d2",name:"Omega-3 protein salmon and sardines",time:"Lunch",detail:"Anti-inflammatory fats. At least 3x per week"},
+{id:"d3",name:"Colorful veggies spinach and beets",time:"Lunch",detail:"Aim for 5 or more colors daily"},
+{id:"d4",name:"Berries blueberries and cherries",time:"Morning",detail:"High antioxidant density. Add to smoothie or eat as snack"},
+{id:"d5",name:"Bone broth or fermented food",time:"Lunch",detail:"Bone broth heals gut lining. Kimchi and sauerkraut repopulate gut"},
+{id:"d6",name:"Turmeric and black pepper",time:"All Day",detail:"Black pepper increases curcumin absorption by 2000 percent"},
+{id:"d7",name:"NO caffeine today",time:"All Day",detail:"POTS trigger. Replace with herbal tea"},
+{id:"d8",name:"NO refined sugar today",time:"All Day",detail:"Sugar fuels inflammation and feeds harmful gut bacteria"},
+{id:"d9",name:"Gluten-free today",time:"All Day",detail:"Dr. Berg: Gluten is a primary gut permeability trigger"}
+]},
+{id:"move",name:"Movement",emoji:"&#x1F3C3;",color:"#7C4DFF",tasks:[
+{id:"m1",name:"Horizontal exercise or recumbent bike",time:"Morning",detail:"POTS Protocol: Upright exercise triggers symptoms. Start horizontal"},
+{id:"m2",name:"Gentle floor stretching 10 min",time:"Morning",detail:"Legs-up-the-wall pose is especially good for venous return"},
+{id:"m3",name:"Short walk 5-15 min",time:"Afternoon",detail:"Wear compression. Stop if dizzy. Progress weekly"},
+{id:"m4",name:"Legs-up-the-wall pose 10 min",time:"Evening",detail:"Drains blood from legs back to core. Helps POTS immediately"},
+{id:"m5",name:"No prolonged standing",time:"All Day",detail:"Avoid standing still for more than a few minutes"}
+]},
+{id:"sleep",name:"Sleep",emoji:"&#x1F319;",color:"#FF9800",tasks:[
+{id:"sl1",name:"Screens off 1 hour before bed",time:"Evening",detail:"Blue light suppresses melatonin and keeps ANS activated"},
+{id:"sl2",name:"Head of bed elevated 4-6 inches",time:"Evening",detail:"Reduces nighttime POTS symptoms and acid reflux"},
+{id:"sl3",name:"Room cool 65-68F and dark",time:"Evening",detail:"Heat worsens POTS. Blackout curtains recommended"},
+{id:"sl4",name:"Consistent sleep and wake time",time:"Evening",detail:"Irregular sleep destroys circadian rhythm and spikes inflammation"},
+{id:"sl5",name:"Magnesium glycinate before bed",time:"Evening",detail:"400mg 30 min before sleep. Deepens sleep, reduces cortisol"},
+{id:"sl6",name:"Target 8-9 hours tonight",time:"Evening",detail:"Sleep debt drives autoimmune flares. Non-negotiable"}
+]},
+{id:"bio",name:"Biohacks",emoji:"&#x26A1;",color:"#FFD600",tasks:[
+{id:"b1",name:"Red Light Therapy 10-20 min",time:"Morning",detail:"Dave Asprey: Reduces inflammation, promotes cellular healing"},
+{id:"b2",name:"Far-Infrared Sauna 10-15 min",time:"Afternoon",detail:"Powerful for inflammation. POTS caution: stay hydrated"},
+{id:"b3",name:"HRV Check",time:"Morning",detail:"Heart Rate Variability measures vagal tone. App: Welltory or WHOOP"},
+{id:"b4",name:"Gratitude or Journaling 5 min",time:"Evening",detail:"Write 3 things grateful for. Reduces cortisol"},
+{id:"b5",name:"Morning Sunlight 10-15 min",time:"Morning",detail:"Natural Vitamin D synthesis and circadian rhythm reset"}
+]}
 ];
-
-var QUOTES = [
-  "Every small step forward is a victory worth celebrating.",
-  "Your body is healing more than you know. Trust the process.",
-  "Strength is not the absence of struggle. It is rising through it.",
-  "You are not your diagnosis. You are so much more.",
-  "Rest is productive. Recovery is real work.",
-  "Today I choose healing. Today I choose myself.",
-  "Progress is progress, no matter how slow.",
-  "You have survived 100% of your hard days. This one is no different."
+var EXPERTS=[
+{name:"Gary Brecka",role:"Human Biologist, The Ultimate Human",emoji:"&#x1F9EC;",color:"#FF2D6B",bullets:["Autoimmune diseases are the immune system responding to hidden pathogens including mold, mycotoxins, parasites, viruses and heavy metals","Fix deficiencies first then biohack. Bloodwork and genetics guide all supplementation","Vitamin D3 5000 IU plus K2 200mcg - 90% of people are deficient, linked to fatigue and autoimmune disorders","Methylated B12 plus B9 - 40% have MTHFR mutations and bioactive forms bypass this","Ashwagandha 600mg per day clinically lowers cortisol by 30%, improves sleep","Electrolytes over sports drinks - sodium, potassium, magnesium without sugar, critical for POTS","Chronic high cortisol blocks ALL healing and stress overrides diet, fasting and exercise"]},
+{name:"Dr. Eric Berg DC",role:"The Knowledge Doc, 14.5M YouTube subscribers",emoji:"&#x1F4DA;",color:"#FF6B9D",bullets:["Vitamin D3 at 8000-10000 IU is the most powerful T-reg cell activator and directly fights autoimmune disease","Poor gut health blocks Vitamin D absorption creating the perfect storm for autoimmune disease","L reuteri and B infantis are the two most critical immune-regulating probiotic strains","Vitamin B1 Benfotiamine fat-soluble form penetrates nerves, crucial for the autonomic nervous system","Leaky gut drives autoimmunity - gluten, refined sugar, seed oils and alcohol are the primary triggers","Fermented foods daily including sauerkraut, kimchi, miso and kefir repopulate beneficial bacteria"]},
+{name:"Dave Asprey",role:"Father of Biohacking, Bulletproof",emoji:"&#x26A1;",color:"#FF2D6B",bullets:["Vagus nerve stimulation reduces inflammation and may replace drugs in autoimmune conditions","Coherent breathing at 5-6 breaths per minute - 91% of dysautonomia patients restored ANS regulation in 5 minutes","Cold thermogenesis - cold shower or face in cold water directly improves vagal tone","HRV training - high vagal tone equals better immunity, metabolism and emotional stability","Chronic stress overrides everything - perfect diet and exercise will not work if stuck in fight-or-flight","Red light therapy reduces inflammation and promotes tissue healing at cellular level"]},
+{name:"Dr. Brian Ardis",role:"Chiropractor and Health Freedom Advocate",emoji:"&#x1F33F;",color:"#FF9800",bullets:["Vitamin C 1000mg daily is immune fortification and a daily essential for autoimmune conditions","Vitamin D3 5000-10000 IU is critical for immune regulation and autoimmune disease","Taurine 500-1000mg supports heart function and autonomic nervous system health","Selenium and Zinc are the core daily immune stack for chronic inflammation","NAC supports blood health, detox and immune modulation","Sugar is the number one immune system destroyer and eliminates white blood cell function for hours"]},
+{name:"Brigham Buhler",role:"Founder Ways2Well, Functional and Regenerative Care",emoji:"&#x1F52C;",color:"#7C4DFF",bullets:["Comprehensive bloodwork is the first step because standard labs miss the picture","Peptide Therapy BPC-157 repairs gut lining, reduces systemic inflammation and supports tissue healing","Hormone optimization is critical because imbalanced hormones drive fatigue and immune dysfunction","The healthcare system profits from keeping you sick and primary care averages only 8 minutes per patient","Ways2Well works virtually through telehealth plus Quest Diagnostics labs anywhere","Preventative not reactive - identify and correct markers BEFORE they become crises"]}
 ];
-
-var EXPERTS = [
-  {name:"Gary Brecka",role:"Human Biologist, The Ultimate Human",emoji:"&#x1F9EC;",color:"#FF2D6B",bullets:["Autoimmune diseases are the immune system responding to hidden pathogens including mold, mycotoxins, parasites, viruses and heavy metals","Fix deficiencies first then biohack. Bloodwork and genetics guide all supplementation","Vitamin D3 5000 IU plus K2 200mcg - 90% of people are deficient, linked to fatigue and autoimmune disorders","Methylated B12 plus B9 L-5-MTHF - 40% have MTHFR mutations and bioactive forms bypass this","Ashwagandha 600mg per day clinically lowers cortisol by 30%, improves sleep","Electrolytes over sports drinks - sodium, potassium, magnesium without sugar, critical for POTS","Chronic high cortisol blocks ALL healing and stress overrides diet, fasting and exercise"]},
-  {name:"Dr. Eric Berg DC",role:"The Knowledge Doc, 14.5M YouTube subscribers",emoji:"&#x1F4DA;",color:"#FF6B9D",bullets:["Vitamin D3 at 8000-10000 IU is the most powerful T-reg cell activator and directly fights autoimmune disease","Poor gut health blocks Vitamin D absorption creating the perfect storm for autoimmune disease","L reuteri and B infantis are the two most critical immune-regulating probiotic strains","Vitamin B1 Benfotiamine fat-soluble form penetrates nerves and is crucial for the autonomic nervous system","Leaky gut drives autoimmunity - gluten, refined sugar, seed oils and alcohol are the primary triggers","Fermented foods daily including sauerkraut, kimchi, miso and kefir repopulate beneficial bacteria"]},
-  {name:"Dave Asprey",role:"Father of Biohacking, Bulletproof",emoji:"&#x26A1;",color:"#FF2D6B",bullets:["Vagus nerve stimulation reduces inflammation and may replace drugs in autoimmune conditions","Coherent breathing at 5-6 breaths per minute - 91% of dysautonomia patients restored ANS regulation in just 5 minutes","Cold thermogenesis - cold shower or face in cold water directly improves vagal tone","HRV training - high vagal tone equals better immunity, metabolism and emotional stability","Chronic stress overrides everything - perfect diet and exercise will not work if stuck in fight-or-flight","Red light therapy reduces inflammation and promotes tissue healing at cellular level"]},
-  {name:"Dr. Brian Ardis",role:"Chiropractor and Health Freedom Advocate",emoji:"&#x1F33F;",color:"#FF9800",bullets:["Vitamin C 1000mg daily is immune fortification and a daily essential for autoimmune conditions","Vitamin D3 5000-10000 IU is critical for immune regulation and autoimmune disease","Taurine 500-1000mg supports heart function and autonomic nervous system health","Selenium and Zinc are the core daily immune stack for chronic inflammation","NAC N-Acetyl Cysteine supports blood health, detox and immune modulation","Sugar is the number one immune system destroyer and eliminates white blood cell function for hours"]},
-  {name:"Brigham Buhler",role:"Founder Ways2Well, Functional and Regenerative Care",emoji:"&#x1F52C;",color:"#7C4DFF",bullets:["Comprehensive bloodwork is the first step because standard labs miss the picture","Peptide Therapy BPC-157 repairs gut lining, reduces systemic inflammation and supports tissue healing","Hormone optimization is critical because imbalanced hormones drive fatigue and immune dysfunction","The healthcare system profits from keeping you sick and primary care averages only 8 minutes per patient","Ways2Well works virtually through telehealth plus Quest Diagnostics labs anywhere","Preventative not reactive - identify and correct markers BEFORE they become crises"]}
-];
-
-var state = {date:"",completions:{},water:0,steps:0,weekData:[0,0,0,0,0,0,0]};
-
-function todayKey(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
-
-function loadState(){
-  try {
-    var saved=localStorage.getItem("lw3");
-    var today=todayKey();
-    if(saved){
-      var p=JSON.parse(saved);
-      if(p.date===today){state=p;}
-      else{
-        var wd=p.weekData||[0,0,0,0,0,0,0];
-        wd.shift();wd.push(calcScore(p.completions||{}));
-        state.weekData=wd;state.date=today;state.completions={};state.water=0;state.steps=0;
-        saveState();
-      }
-    } else {state.date=today;saveState();}
-  } catch(e){state.date=todayKey();}
+var S={date:"",comp:{},water:0,steps:0,wd:[0,0,0,0,0,0,0]};
+function tkey(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function load(){
+  try{
+    var s=localStorage.getItem("lw4"),t=tkey();
+    if(s){var p=JSON.parse(s);if(p.date===t){S=p;}else{var w=p.wd||[0,0,0,0,0,0,0];w.shift();w.push(score(p.comp||{}));S.wd=w;S.date=t;S.comp={};S.water=0;S.steps=0;save();}}
+    else{S.date=t;save();}
+  }catch(e){S.date=tkey();}
 }
-
-function saveState(){
-  try{state.date=todayKey();localStorage.setItem("lw3",JSON.stringify(state));}catch(e){}
+function save(){try{S.date=tkey();localStorage.setItem("lw4",JSON.stringify(S));}catch(e){}}
+function score(c){var t=0,d=0;for(var i=0;i<CATS.length;i++)for(var j=0;j<CATS[i].tasks.length;j++){t++;if(c[CATS[i].tasks[j].id])d++;}return t>0?Math.round((d/t)*100):0;}
+function cstat(id){var c=null;for(var i=0;i<CATS.length;i++)if(CATS[i].id===id){c=CATS[i];break;}if(!c)return{d:0,t:0,p:0};var t=c.tasks.length,d=0;for(var j=0;j<c.tasks.length;j++)if(S.comp[c.tasks[j].id])d++;return{d:d,t:t,p:t>0?Math.round((d/t)*100):0};}
+function totals(){var t=0,d=0;for(var i=0;i<CATS.length;i++)for(var j=0;j<CATS[i].tasks.length;j++){t++;if(S.comp[CATS[i].tasks[j].id])d++;}return{d:d,l:t-d,p:t>0?Math.round((d/t)*100):0};}
+function toast(m){var el=document.getElementById("toast");el.textContent=m;el.classList.add("on");setTimeout(function(){el.classList.remove("on");},2500);}
+function pb(p,c){return "<div class='pb'><div class='pf' style='width:"+p+"%;background:"+c+";'></div></div>";}
+function upring(pct){
+  var c=pct>=80?"#00C853":(pct>=50?"#FFD600":"#FF2D6B");
+  var r=45,circ=2*Math.PI*r,dash=(pct/100)*circ;
+  var rp=document.getElementById("ring-prog");
+  var rt=document.getElementById("ring-txt");
+  if(rp){rp.setAttribute("stroke-dasharray",dash+" "+circ);rp.setAttribute("stroke",c);}
+  if(rt){rt.textContent=pct+"%";rt.setAttribute("fill",c);}
 }
-
-function calcScore(c){
-  var t=0,d=0;
-  for(var i=0;i<CATS.length;i++){for(var j=0;j<CATS[i].tasks.length;j++){t++;if(c[CATS[i].tasks[j].id])d++;}}
-  return t>0?Math.round((d/t)*100):0;
+function upscore(pct){
+  var c=pct>=80?"#00C853":(pct>=50?"#FFD600":"#FF2D6B");
+  var r=61,circ=2*Math.PI*r,dash=(pct/100)*circ;
+  var sp=document.getElementById("score-prog");
+  var st=document.getElementById("score-txt");
+  if(sp){sp.setAttribute("stroke-dasharray",dash+" "+circ);sp.setAttribute("stroke",c);}
+  if(st){st.textContent=pct+"%";st.setAttribute("fill",c);}
 }
-
-function getCatStats(id){
-  var cat=null;
-  for(var i=0;i<CATS.length;i++){if(CATS[i].id===id){cat=CATS[i];break;}}
-  if(!cat)return{done:0,total:0,pct:0};
-  var t=cat.tasks.length,d=0;
-  for(var j=0;j<cat.tasks.length;j++){if(state.completions[cat.tasks[j].id])d++;}
-  return{done:d,total:t,pct:t>0?Math.round((d/t)*100):0};
+function sw(pg,btn){
+  document.querySelectorAll(".pg").forEach(function(e){e.classList.remove("on");});
+  document.querySelectorAll(".nb").forEach(function(e){e.classList.remove("on");});
+  document.getElementById("det").style.display="none";
+  var p=document.getElementById("p"+pg);if(p)p.classList.add("on");
+  if(btn)btn.classList.add("on");
+  if(pg==="h")refreshHome();
+  if(pg==="t"){buildCatList();document.getElementById("pt").classList.add("on");}
+  if(pg==="e")buildExperts();
+  if(pg==="p")refreshProgress();
+  document.getElementById("content").scrollTop=0;
 }
-
-function getTotals(){
-  var t=0,d=0;
-  for(var i=0;i<CATS.length;i++){for(var j=0;j<CATS[i].tasks.length;j++){t++;if(state.completions[CATS[i].tasks[j].id])d++;}}
-  return{done:d,left:t-d,total:t,pct:t>0?Math.round((d/t)*100):0};
-}
-
-function toast(msg){
-  var el=document.getElementById("toast");
-  el.textContent=msg;el.classList.add("show");
-  setTimeout(function(){el.classList.remove("show");},2500);
-}
-
-function progBar(pct,color){
-  return "<div class='prog-wrap'><div class='prog-fill' style='width:"+pct+"%;background:"+color+";'></div></div>";
-}
-
-function ring(pct,color,size,stroke){
-  size=size||120;stroke=stroke||10;
-  var r=(size/2)-stroke,circ=2*Math.PI*r,dash=(pct/100)*circ,cx=size/2;
-  return "<svg width='"+size+"' height='"+size+"' viewBox='0 0 "+size+" "+size+"'>"
-    +"<circle cx='"+cx+"' cy='"+cx+"' r='"+r+"' fill='none' stroke='#222' stroke-width='"+stroke+"'/>"
-    +"<circle cx='"+cx+"' cy='"+cx+"' r='"+r+"' fill='none' stroke='"+color+"' stroke-width='"+stroke+"' stroke-dasharray='"+dash+" "+circ+"' stroke-linecap='round' transform='rotate(-90 "+cx+" "+cx+")'></circle>"
-    +"<text x='"+cx+"' y='"+(cx+2)+"' text-anchor='middle' dominant-baseline='middle' fill='"+color+"' font-size='"+Math.round(size*0.2)+"' font-weight='900' font-family='Nunito,sans-serif'>"+pct+"%</text>"
-    +"</svg>";
-}
-
-function dateStr(){
-  var d=new Date();
-  var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  return days[d.getDay()]+", "+months[d.getMonth()]+" "+d.getDate();
-}
-
-function switchTab(name,btn){
-  var pages=document.querySelectorAll(".tab-page");
-  for(var i=0;i<pages.length;i++)pages[i].classList.remove("active");
-  var btns=document.querySelectorAll(".nav-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
-  document.getElementById("task-detail").style.display="none";
-  var page=document.getElementById("tab-"+name);
-  if(page)page.classList.add("active");
-  if(btn)btn.classList.add("active");
-  if(name==="home")renderHome();
-  if(name==="tasks")renderTaskList();
-  if(name==="experts")renderExperts();
-  if(name==="progress")renderProgress();
-  document.getElementById("tab-content").scrollTop=0;
-}
-
-function renderHome(){
-  var el=document.getElementById("tab-home");
-  if(!el)return;
-  var s=getTotals();
-  var pct=s.pct;
-  var rc=pct>=80?"#00C853":(pct>=50?"#FFD600":"#FF2D6B");
-  var quote=QUOTES[new Date().getDay()%QUOTES.length];
-  var wPct=Math.min(100,Math.round((state.water/10)*100));
-  var h="";
-  h+="<div class='hero-card'>";
-  h+="<div class='hero-greeting'>Hey <span>Laura!</span> &#x1F338;</div>";
-  h+="<div class='hero-date'>"+dateStr()+"</div>";
-  h+="<div class='hero-quote'>"+quote+"</div>";
-  h+="</div>";
-  h+="<div class='ring-row'>";
-  h+="<div style='flex-shrink:0;text-align:center;'>"+ring(pct,rc,110,10)+"<div class='ring-label'>Todays Healing</div></div>";
-  h+="<div class='stat-col'>";
-  h+="<div class='stat-box'><span class='lbl'>Done</span><span class='val' style='color:#00C853;'>"+s.done+"</span></div>";
-  h+="<div class='stat-box'><span class='lbl'>Left</span><span class='val' style='color:#FF2D6B;'>"+s.left+"</span></div>";
-  h+="<div class='stat-box'><span class='lbl'>Steps</span><span class='val' style='color:#FFD600;'>"+state.steps+"</span></div>";
-  h+="</div></div>";
-  h+="<div class='water-card'>";
-  h+="<div class='water-title'>&#x1F4A7; Water Intake</div>";
-  h+="<div class='water-row'>";
-  h+="<button class='btn-circle' onclick='waterChange(-1)'>-</button>";
-  h+="<div><div class='water-num'>"+state.water+"</div><div class='water-sub'>of 10 glasses</div></div>";
-  h+="<button class='btn-circle' onclick='waterChange(1)'>+</button>";
-  h+="</div>";
-  h+=progBar(wPct,"linear-gradient(90deg,#00B4D8,#48cae4)");
-  h+="</div>";
-  h+="<div class='sec-title'>Todays Categories</div>";
-  h+="<div class='cat-grid'>";
-  for(var i=0;i<CATS.length;i++){
-    var cat=CATS[i];
-    var cs=getCatStats(cat.id);
-    h+="<div class='cat-card' onclick='openCatHome(\""+cat.id+"\")' style='border:1px solid "+cat.color+"33;'>";
-    h+="<div class='cat-icon'>"+cat.emoji+"</div>";
-    h+="<div class='cat-name'>"+cat.name+"</div>";
-    h+="<div class='cat-pct' style='color:"+cat.color+";'>"+cs.pct+"%</div>";
-    h+=progBar(cs.pct,cat.color);
-    h+="</div>";
+function refreshHome(){
+  var t=totals(),pct=t.p;
+  document.getElementById("hdate").textContent=datestr();
+  document.getElementById("hquote").textContent=QUOTES[new Date().getDay()%QUOTES.length];
+  document.getElementById("s-done").textContent=t.d;
+  document.getElementById("s-left").textContent=t.l;
+  document.getElementById("s-steps").textContent=S.steps;
+  document.getElementById("wnum").textContent=S.water;
+  document.getElementById("wbar").style.width=Math.min(100,Math.round((S.water/10)*100))+"%";
+  upring(pct);
+  var g=document.getElementById("catgrid");
+  if(g){
+    var h="";
+    for(var i=0;i<CATS.length;i++){
+      var cat=CATS[i],cs=cstat(cat.id);
+      h+="<div class='cc' onclick='opencat(\""+cat.id+"\")' style='border:1px solid "+cat.color+"33;'>";
+      h+="<div class='ci'>"+cat.emoji+"</div>";
+      h+="<div class='cn'>"+cat.name+"</div>";
+      h+="<div class='cp' style='color:"+cat.color+";'>"+cs.p+"%</div>";
+      h+=pb(cs.p,cat.color);
+      h+="</div>";
+    }
+    g.innerHTML=h;
   }
-  h+="</div>";
-  h+="<div class='tip-card'>";
-  h+="<div class='tip-title'>&#x26A1; POTS Morning Protocol</div>";
-  h+="<div class='tip-text'>1. Drink electrolytes BEFORE getting up<br>2. Do 10 ankle pumps in bed<br>3. Sit at bed edge for 60 seconds<br>4. Put on compression stockings while seated<br>5. Rise slowly and have a wall or chair nearby</div>";
-  h+="</div>";
-  el.innerHTML=h;
 }
-
-function openCatHome(id){
-  var btns=document.querySelectorAll(".nav-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
-  btns[1].classList.add("active");
-  var pages=document.querySelectorAll(".tab-page");
-  for(var i=0;i<pages.length;i++)pages[i].classList.remove("active");
-  setTimeout(function(){openCat(id);},50);
-}
-
-function waterChange(d){
-  state.water=Math.max(0,Math.min(20,state.water+d));
-  saveState();renderHome();
-  if(state.water===10)toast("Hydration goal reached! Amazing!");
-}
-
-function renderTaskList(){
-  document.getElementById("task-detail").style.display="none";
-  document.getElementById("tab-tasks").classList.add("active");
-  var el=document.getElementById("tab-tasks");
-  var h="<div class='sec-title'>Task Categories</div>";
-  for(var i=0;i<CATS.length;i++){
-    var cat=CATS[i];
-    var cs=getCatStats(cat.id);
-    h+="<div class='task-cat-row' onclick='openCat(\""+cat.id+"\")'>";
-    h+="<div class='task-cat-ico'>"+cat.emoji+"</div>";
-    h+="<div class='task-cat-info'>";
-    h+="<div class='task-cat-name' style='color:"+cat.color+";'>"+cat.name+"</div>";
-    h+="<div class='task-cat-sub'>"+cs.done+" of "+cs.total+" completed</div>";
-    h+=progBar(cs.pct,cat.color);
-    h+="</div>";
-    h+="<div class='task-cat-pct' style='color:"+cat.color+";'>"+cs.pct+"%</div>";
-    h+="</div>";
-  }
-  el.innerHTML=h;
-}
-
-function openCat(catId){
-  var cat=null;
-  for(var i=0;i<CATS.length;i++){if(CATS[i].id===catId){cat=CATS[i];break;}}
+function datestr(){var d=new Date(),days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],months=["January","February","March","April","May","June","July","August","September","October","November","December"];return days[d.getDay()]+", "+months[d.getMonth()]+" "+d.getDate();}
+function wchg(n){S.water=Math.max(0,Math.min(20,S.water+n));save();document.getElementById("wnum").textContent=S.water;document.getElementById("wbar").style.width=Math.min(100,Math.round((S.water/10)*100))+"%";if(S.water===10)toast("Hydration goal reached! Amazing!");}
+function opencat(id){
+  var cat=null;for(var i=0;i<CATS.length;i++)if(CATS[i].id===id){cat=CATS[i];break;}
   if(!cat)return;
-  var pages=document.querySelectorAll(".tab-page");
-  for(var i=0;i<pages.length;i++)pages[i].classList.remove("active");
-  var det=document.getElementById("task-detail");
-  det.style.display="block";
-  var h="<button class='back-btn' onclick='backToCats()'>&#x2190; Back</button>";
+  document.querySelectorAll(".pg").forEach(function(e){e.classList.remove("on");});
+  var det=document.getElementById("det");det.style.display="block";
+  var h="<button class='bbtn' onclick='backtocats()'>&#x2190; Back</button>";
   h+="<div style='font-size:20px;font-weight:900;color:"+cat.color+";margin-bottom:14px;'>"+cat.emoji+" "+cat.name+"</div>";
   for(var j=0;j<cat.tasks.length;j++){
-    var task=cat.tasks[j];
-    var chk=state.completions[task.id]?true:false;
-    h+=taskHTML(task,chk,cat.color);
+    var tk=cat.tasks[j],ch=S.comp[tk.id]?true:false;
+    h+="<div class='ti' id='ti-"+tk.id+"'><div class='tt'>";
+    h+="<div class='ck"+(ch?" on":"")+"' onclick='togck(\""+tk.id+"\")' id='ck-"+tk.id+"'></div>";
+    h+="<div style='flex:1;'><div class='tn"+(ch?" dn":"")+"' id='tn-"+tk.id+"'>"+tk.name+"</div>";
+    h+="<div class='tm' style='color:"+cat.color+";'>"+tk.time+"</div>";
+    h+="<div class='td'>"+tk.detail+"</div></div></div>";
+    h+="<button class='tr' onclick='rmtask(\""+tk.id+"\")'>Remove</button></div>";
   }
-  h+="<button class='add-btn' onclick='toggleAddForm(\""+catId+"\")'>+ Add Custom Task</button>";
-  h+="<div id='af-"+catId+"' class='add-form'>";
-  h+="<input class='finput' id='fn-"+catId+"' placeholder='Task name' type='text'>";
-  h+="<textarea class='finput' id='fd-"+catId+"' placeholder='Details' rows='3' style='resize:none;'></textarea>";
+  h+="<button class='addb' onclick='togform(\""+id+"\")'>+ Add Custom Task</button>";
+  h+="<div id='af-"+id+"' class='adf'><input class='fi' id='fn-"+id+"' placeholder='Task name' type='text'><textarea class='fi' id='fd-"+id+"' placeholder='Details' rows='3' style='resize:none;'></textarea><button class='fs' onclick='addtask(\""+id+"\")'>Add Task</button></div>";
 
-h+=”<button class='fsub' onclick='addTask(\""+catId+"\")'>Add Task</button>”;
-h+=”</div>”;
 det.innerHTML=h;
-document.getElementById(“tab-content”).scrollTop=0;
+document.getElementById(“content”).scrollTop=0;
 }
-
-function taskHTML(task,chk,color){
-var cc=chk?“chk on”:“chk”;
-var ns=chk?“task-name done”:“task-name”;
-return “<div class='task-item' id='ti-"+task.id+"'>”
-+”<div class='task-top'>”
-+”<div class='"+cc+"' onclick='toggleTask(\""+task.id+"\")' id='chk-"+task.id+"'></div>”
-+”<div class='task-info'>”
-+”<div class='"+ns+"' id='tn-"+task.id+"'>”+task.name+”</div>”
-+”<div class='task-time' style='color:"+color+";'>”+task.time+”</div>”
-+”<div class='task-detail-txt'>”+task.detail+”</div>”
-+”</div></div>”
-+”<button class='task-remove' onclick='removeTask(\""+task.id+"\")'>Remove</button>”
-+”</div>”;
+function togck(id){
+S.comp[id]=!S.comp[id];save();
+var ck=document.getElementById(“ck-”+id),tn=document.getElementById(“tn-”+id);
+if(ck&&tn){if(S.comp[id]){ck.className=“ck on”;tn.className=“tn dn”;toast(“Great job! Keep it up!”);}else{ck.className=“ck”;tn.className=“tn”;}}
 }
-
-function toggleTask(id){
-state.completions[id]=!state.completions[id];
-saveState();
-var chk=document.getElementById(“chk-”+id);
-var tn=document.getElementById(“tn-”+id);
-if(chk&&tn){
-if(state.completions[id]){chk.className=“chk on”;tn.className=“task-name done”;toast(“Great job! Keep it up!”);}
-else{chk.className=“chk”;tn.className=“task-name”;}
-}
-}
-
-function removeTask(id){
+function rmtask(id){for(var i=0;i<CATS.length;i++)for(var j=0;j<CATS[i].tasks.length;j++)if(CATS[i].tasks[j].id===id){CATS[i].tasks.splice(j,1);break;}delete S.comp[id];save();var el=document.getElementById(“ti-”+id);if(el)el.remove();}
+function backtocats(){document.getElementById(“det”).style.display=“none”;document.getElementById(“pt”).classList.add(“on”);buildCatList();}
+function togform(id){var f=document.getElementById(“af-”+id);if(f)f.style.display=f.style.display===“none”||!f.style.display?“block”:“none”;}
+function addtask(id){var ne=document.getElementById(“fn-”+id),de=document.getElementById(“fd-”+id);if(!ne||!ne.value.trim()){toast(“Enter a task name”);return;}var t={id:“c”+Date.now(),name:ne.value.trim(),time:“Any Time”,detail:de?de.value.trim():””};for(var i=0;i<CATS.length;i++)if(CATS[i].id===id){CATS[i].tasks.push(t);break;}ne.value=””;if(de)de.value=””;save();opencat(id);toast(“Task added!”);}
+function buildCatList(){
+var el=document.getElementById(“catlist”);if(!el)return;
+var h=””;
 for(var i=0;i<CATS.length;i++){
-for(var j=0;j<CATS[i].tasks.length;j++){
-if(CATS[i].tasks[j].id===id){CATS[i].tasks.splice(j,1);break;}
+var cat=CATS[i],cs=cstat(cat.id);
+h+=”<div class='tcr' onclick='opencat(\""+cat.id+"\")'>”;
+h+=”<div class='tci'>”+cat.emoji+”</div>”;
+h+=”<div style='flex:1;'><div class='tcn' style='color:"+cat.color+";'>”+cat.name+”</div>”;
+h+=”<div class='tcs'>”+cs.d+” of “+cs.t+” completed</div>”;
+h+=pb(cs.p,cat.color)+”</div>”;
+h+=”<div class='tcp' style='color:"+cat.color+";'>”+cs.p+”%</div></div>”;
 }
+el.innerHTML=h;
 }
-delete state.completions[id];saveState();
-var el=document.getElementById(“ti-”+id);if(el)el.remove();
+function opencat(id){
+var cat=null;for(var i=0;i<CATS.length;i++)if(CATS[i].id===id){cat=CATS[i];break;}
+if(!cat)return;
+document.querySelectorAll(”.pg”).forEach(function(e){e.classList.remove(“on”);});
+var det=document.getElementById(“det”);det.style.display=“block”;
+var h=”<button class='bbtn' onclick='backtocats()'>← Back</button>”;
+h+=”<div style='font-size:20px;font-weight:900;color:"+cat.color+";margin-bottom:14px;'>”+cat.emoji+” “+cat.name+”</div>”;
+for(var j=0;j<cat.tasks.length;j++){
+var tk=cat.tasks[j],ch=S.comp[tk.id]?true:false;
+h+=”<div class='ti' id='ti-"+tk.id+"'><div class='tt'>”;
+h+=”<div class='ck"+(ch?" on":"")+"' onclick='togck(\""+tk.id+"\")' id='ck-"+tk.id+"'></div>”;
+h+=”<div style='flex:1;'><div class='tn"+(ch?" dn":"")+"' id='tn-"+tk.id+"'>”+tk.name+”</div>”;
+h+=”<div class='tm' style='color:"+cat.color+";'>”+tk.time+”</div>”;
+h+=”<div class='td'>”+tk.detail+”</div></div></div>”;
+h+=”<button class='tr' onclick='rmtask(\""+tk.id+"\")'>Remove</button></div>”;
 }
-
-function backToCats(){
-document.getElementById(“task-detail”).style.display=“none”;
-document.getElementById(“tab-tasks”).classList.add(“active”);
-renderTaskList();
+h+=”<button class='addb' onclick='togform(\""+id+"\")'>+ Add Custom Task</button>”;
+h+=”<div id='af-"+id+"' class='adf'><input class='fi' id='fn-"+id+"' placeholder='Task name' type='text'><textarea class='fi' id='fd-"+id+"' placeholder='Details' rows='3' style='resize:none;'></textarea><button class='fs' onclick='addtask(\""+id+"\")'>Add Task</button></div>”;
+det.innerHTML=h;
+document.getElementById(“content”).scrollTop=0;
 }
-
-function toggleAddForm(id){
-var f=document.getElementById(“af-”+id);
-if(f)f.style.display=f.style.display===“none”||f.style.display===””?“block”:“none”;
-}
-
-function addTask(catId){
-var ne=document.getElementById(“fn-”+catId);
-var de=document.getElementById(“fd-”+catId);
-if(!ne||!ne.value.trim()){toast(“Please enter a task name”);return;}
-var t={id:“c”+Date.now(),name:ne.value.trim(),time:“Any Time”,detail:de?de.value.trim():””};
-for(var i=0;i<CATS.length;i++){if(CATS[i].id===catId){CATS[i].tasks.push(t);break;}}
-ne.value=””;if(de)de.value=””;
-saveState();openCat(catId);toast(“Task added!”);
-}
-
-function renderExperts(){
-var el=document.getElementById(“tab-experts”);
-var h=”<div class='sec-title'>Your Expert Team</div>”;
+function buildExperts(){
+var el=document.getElementById(“explist”);if(!el)return;
+var h=””;
 for(var i=0;i<EXPERTS.length;i++){
 var e=EXPERTS[i];
-h+=”<div class='exp-card' id='ec"+i+"'>”;
-h+=”<div class='exp-head' onclick='toggleExp("+i+")'>”;
-h+=”<div class='exp-emoji'>”+e.emoji+”</div>”;
-h+=”<div class='exp-info'><div class='exp-name' style='color:"+e.color+";'>”+e.name+”</div><div class='exp-role'>”+e.role+”</div></div>”;
-h+=”<div class='exp-chev'>▼</div>”;
-h+=”</div><div class='exp-body'><div class='exp-body-inner'>”;
-for(var j=0;j<e.bullets.length;j++){
-h+=”<div class='exp-bullet'><span style='color:"+e.color+";font-size:16px;'>•</span><span>”+e.bullets[j]+”</span></div>”;
-}
+h+=”<div class='ec' id='ec"+i+"'><div class='eh' onclick='togexp("+i+")'>”;
+h+=”<div class='ee'>”+e.emoji+”</div>”;
+h+=”<div style='flex:1;'><div class='en' style='color:"+e.color+";'>”+e.name+”</div><div class='er'>”+e.role+”</div></div>”;
+h+=”<div class='ev'>▼</div></div>”;
+h+=”<div class='eb'><div class='ebi'>”;
+for(var j=0;j<e.bullets.length;j++)h+=”<div class='ebl'><span style='color:"+e.color+";font-size:16px;'>•</span><span>”+e.bullets[j]+”</span></div>”;
 h+=”</div></div></div>”;
 }
 el.innerHTML=h;
 }
-
-function toggleExp(i){
-var c=document.getElementById(“ec”+i);if(c)c.classList.toggle(“open”);
-}
-
-function renderProgress(){
-var el=document.getElementById(“tab-progress”);
-var score=calcScore(state.completions);
-var rc=score>=80?”#00C853”:(score>=50?”#FFD600”:”#FF2D6B”);
+function togexp(i){var c=document.getElementById(“ec”+i);if(c)c.classList.toggle(“op”);}
+function refreshProgress(){
+var sc=score(S.comp);
+upscore(sc);
 var days=[“Mon”,“Tue”,“Wed”,“Thu”,“Fri”,“Sat”,“Sun”];
-var sPct=Math.min(100,Math.round((state.steps/5000)*100));
-var h=””;
-h+=”<div class='score-sec'>”+ring(score,rc,150,14)+”<div class='score-sub'>Healing Score Today</div></div>”;
-h+=”<div class='week-card'><div style='font-size:14px;font-weight:800;'>📅 Weekly Progress</div><div class='week-bars'>”;
-var wd=state.weekData.slice(0,6).concat([score]);
+var wb=document.getElementById(“weekbars”);
+if(wb){
+var wd=S.wd.slice(0,6).concat([sc]),h=””;
 for(var i=0;i<7;i++){
-var v=wd[i]||0;
-var bh=Math.round((v/100)*100);
-var bc=v>=80?”#00C853”:(v>=50?”#FFD600”:”#FF2D6B”);
-h+=”<div class='wbar-wrap'><div class='wbar-bg'><div class='wbar-fill' style='height:"+bh+"%;background:"+bc+";'></div></div><div class='wday'>”+days[i]+”</div></div>”;
+var v=wd[i]||0,bh=v,bc=v>=80?”#00C853”:(v>=50?”#FFD600”:”#FF2D6B”);
+h+=”<div class='wbw'><div class='wbb'><div class='wbf' style='height:"+bh+"%;background:"+bc+";'></div></div><div class='wbd'>”+days[i]+”</div></div>”;
 }
-h+=”</div></div>”;
-h+=”<div class='prog-sec'><div class='sec-title' style='margin-top:0;'>Category Progress</div>”;
+wb.innerHTML=h;
+}
+var cp=document.getElementById(“catprog”);
+if(cp){
+var h2=”<div class='st' style='margin-top:0;'>Category Progress</div>”;
 for(var i=0;i<CATS.length;i++){
-var cat=CATS[i];var cs=getCatStats(cat.id);
-h+=”<div class='prog-row'><div class='prog-row-top'><div class='prog-row-name'>”+cat.emoji+” “+cat.name+”</div><div class='prog-row-pct' style='color:"+cat.color+";'>”+cs.pct+”%</div></div>”+progBar(cs.pct,cat.color)+”</div>”;
+var cat=CATS[i],cs=cstat(cat.id);
+h2+=”<div class='pr'><div class='prt'><div class='prn'>”+cat.emoji+” “+cat.name+”</div><div class='prp' style='color:"+cat.color+";'>”+cs.p+”%</div></div>”+pb(cs.p,cat.color)+”</div>”;
 }
-h+=”</div>”;
-h+=”<div class='steps-card'><div style='font-size:14px;font-weight:800;margin-bottom:10px;'>🦶 Daily Steps</div>”;
-h+=”<div class='steps-num'>”+state.steps.toLocaleString()+”</div>”;
-h+=”<div class='steps-goal'>Goal: 5,000 steps</div>”;
-h+=progBar(sPct,“linear-gradient(90deg,#7C4DFF,#b39ddb)”);
-h+=”<div class='steps-btns'><button class='steps-btn sub' onclick='stepsChange(-250)'>-250</button><button class='steps-btn add' onclick='stepsChange(250)'>+250</button></div></div>”;
-el.innerHTML=h;
+cp.innerHTML=h2;
 }
-
-function stepsChange(d){
-state.steps=Math.max(0,state.steps+d);saveState();renderProgress();
-if(state.steps>=5000&&state.steps-d<5000)toast(“Step goal reached! You crushed it!”);
+document.getElementById(“stepnum”).textContent=S.steps.toLocaleString();
+document.getElementById(“stepbar”).style.width=Math.min(100,Math.round((S.steps/5000)*100))+”%”;
 }
-
-loadState();
-renderHome();
-renderExperts();
+function schg(n){S.steps=Math.max(0,S.steps+n);save();document.getElementById(“stepnum”).textContent=S.steps.toLocaleString();document.getElementById(“stepbar”).style.width=Math.min(100,Math.round((S.steps/5000)*100))+”%”;document.getElementById(“s-steps”).textContent=S.steps;if(S.steps>=5000&&S.steps-n<5000)toast(“Step goal reached! You crushed it!”);}
+load();
+refreshHome();
+buildExperts();
 </script>
 
 </body>

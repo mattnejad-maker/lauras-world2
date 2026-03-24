@@ -330,16 +330,20 @@ function upscore(pct){
   if(st){st.textContent=pct+"%";st.setAttribute("fill",c);}
 }
 function sw(pg,btn){
-  document.querySelectorAll(".pg").forEach(function(e){e.classList.remove("on");});
-  document.querySelectorAll(".nb").forEach(function(e){e.classList.remove("on");});
-  document.getElementById("det").style.display="none";
-  var p=document.getElementById("p"+pg);if(p)p.classList.add("on");
+  var pgs=document.querySelectorAll(".pg");
+  for(var i=0;i<pgs.length;i++)pgs[i].classList.remove("on");
+  var nbs=document.querySelectorAll(".nb");
+  for(var i=0;i<nbs.length;i++)nbs[i].classList.remove("on");
+  var det=document.getElementById("det");
+  if(det)det.style.display="none";
+  var p=document.getElementById("p"+pg);
+  if(p)p.classList.add("on");
   if(btn)btn.classList.add("on");
   if(pg==="h")refreshHome();
-  if(pg==="t"){buildCatList();document.getElementById("pt").classList.add("on");}
+  if(pg==="t"){buildCatList();var pt=document.getElementById("pt");if(pt)pt.classList.add("on");}
   if(pg==="e")buildExperts();
   if(pg==="p")refreshProgress();
-  document.getElementById("content").scrollTop=0;
+  var c=document.getElementById("content");if(c)c.scrollTop=0;
 }
 function refreshHome(){
   var t=totals(),pct=t.p;
@@ -396,7 +400,7 @@ var ck=document.getElementById(“ck-”+id),tn=document.getElementById(“tn-�
 if(ck&&tn){if(S.comp[id]){ck.className=“ck on”;tn.className=“tn dn”;toast(“Great job! Keep it up!”);}else{ck.className=“ck”;tn.className=“tn”;}}
 }
 function rmtask(id){for(var i=0;i<CATS.length;i++)for(var j=0;j<CATS[i].tasks.length;j++)if(CATS[i].tasks[j].id===id){CATS[i].tasks.splice(j,1);break;}delete S.comp[id];save();var el=document.getElementById(“ti-”+id);if(el)el.remove();}
-function backtocats(){document.getElementById(“det”).style.display=“none”;document.getElementById(“pt”).classList.add(“on”);buildCatList();}
+function backtocats(){var det=document.getElementById(“det”);if(det)det.style.display=“none”;var pt=document.getElementById(“pt”);if(pt)pt.classList.add(“on”);buildCatList();}
 function togform(id){var f=document.getElementById(“af-”+id);if(f)f.style.display=f.style.display===“none”||!f.style.display?“block”:“none”;}
 function addtask(id){var ne=document.getElementById(“fn-”+id),de=document.getElementById(“fd-”+id);if(!ne||!ne.value.trim()){toast(“Enter a task name”);return;}var t={id:“c”+Date.now(),name:ne.value.trim(),time:“Any Time”,detail:de?de.value.trim():””};for(var i=0;i<CATS.length;i++)if(CATS[i].id===id){CATS[i].tasks.push(t);break;}ne.value=””;if(de)de.value=””;save();opencat(id);toast(“Task added!”);}
 function buildCatList(){

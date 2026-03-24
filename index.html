@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lauras World">
+<meta name="theme-color" content="#0a0a0a">
+<title>Lauras World</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+--pink:#FF2D6B;--pink2:#FF6B9D;--pink3:#ff9ec0;
+--blue:#00B4D8;--green:#00C853;--purple:#7C4DFF;
+--orange:#FF9800;--yellow:#FFD600;
+--bg:#0a0a0a;--card:#161616;--card2:#1e1e1e;--text:#fff;--sub:#aaa;
+--safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text);}
+body{display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative;}
+
+/* HEADER */
+#app-header{
+padding:calc(var(–safe-top) + 10px) 16px 10px;
+background:linear-gradient(180deg,#0a0a0a 80%,transparent);
+display:flex;align-items:center;gap:12px;flex-shrink:0;
+position:relative;z-index:10;
+}
+.header-avatar{width:52px;height:52px;flex-shrink:0;}
+.header-text{}
+.header-logo{
+font-size:22px;font-weight:900;
+background:linear-gradient(90deg,var(–pink),var(–pink2),#ff9ec0);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+line-height:1.1;
+}
+.header-sub{font-size:10px;color:var(–sub);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+
+/* TAB CONTENT */
+#tab-content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 80px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+#tab-content::-webkit-scrollbar{display:none;}
+
+/* BOTTOM NAV */
+#bottom-nav{
+flex-shrink:0;
+display:flex;
+background:#111;
+border-top:1px solid #222;
+padding-bottom:var(–safe-bot);
+}
+.nav-btn{
+flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+padding:10px 4px 8px;border:none;background:transparent;color:var(–sub);
+font-family:‘Nunito’,sans-serif;font-size:10px;font-weight:700;gap:4px;cursor:pointer;
+transition:color 0.2s;letter-spacing:0.5px;
+}
+.nav-btn.active{color:var(–pink);}
+.nav-btn svg{width:22px;height:22px;transition:transform 0.2s;}
+.nav-btn.active svg{transform:scale(1.15);}
+
+/* TABS */
+.tab-page{display:none;padding:8px 14px;}
+.tab-page.active{display:block;}
+
+/* CARDS */
+.card{background:var(–card);border-radius:18px;padding:16px;margin-bottom:12px;}
+.card2{background:var(–card2);border-radius:14px;padding:14px;margin-bottom:10px;}
+
+/* HERO CARD */
+.hero-card{
+background:linear-gradient(135deg,#1a0010,#2a001a,#1a0810);
+border:1px solid rgba(255,45,107,0.3);
+border-radius:22px;padding:20px;margin-bottom:14px;
+position:relative;overflow:hidden;
+}
+.hero-card::before{
+content:’’;position:absolute;top:-30px;right:-30px;
+width:120px;height:120px;
+background:radial-gradient(circle,rgba(255,45,107,0.2),transparent 70%);
+border-radius:50%;
+}
+.hero-greeting{font-size:26px;font-weight:900;line-height:1.1;}
+.hero-greeting span{
+background:linear-gradient(90deg,var(–pink),var(–pink2));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-date{font-size:12px;color:var(–sub);margin:4px 0 10px;}
+.hero-quote{font-size:13px;color:#ddd;line-height:1.5;font-style:italic;border-left:3px solid var(–pink);padding-left:10px;}
+
+/* PROGRESS RING */
+.ring-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:14px;}
+.ring-label{font-size:12px;color:var(–sub);margin-top:6px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+.ring-val{font-size:28px;font-weight:900;color:var(–pink);}
+
+/* STAT BOXES */
+.stat-row{display:flex;gap:10px;margin-bottom:12px;}
+.stat-box{flex:1;background:var(–card);border-radius:14px;padding:12px 8px;text-align:center;}
+.stat-box .val{font-size:22px;font-weight:900;}
+.stat-box .lbl{font-size:10px;color:var(–sub);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+/* WATER */
+.water-track{background:var(–card);border-radius:18px;padding:16px;margin-bottom:12px;}
+.water-title{font-size:14px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.water-btns{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.water-count{font-size:32px;font-weight:900;color:var(–blue);text-align:center;flex:1;}
+.water-sub{font-size:11px;color:var(–sub);text-align:center;}
+.btn-circle{
+width:44px;height:44px;border-radius:50%;border:none;
+background:linear-gradient(135deg,var(–pink),var(–pink2));
+color:#fff;font-size:22px;font-weight:900;cursor:pointer;
+display:flex;align-items:center;justify-content:center;flex-shrink:0;
+box-shadow:0 4px 12px rgba(255,45,107,0.4);
+}
+
+/* PROGRESS BAR */
+.prog-bar-wrap{background:#222;border-radius:99px;height:8px;overflow:hidden;margin-top:6px;}
+.prog-bar-fill{height:100%;border-radius:99px;transition:width 0.4s ease;}
+
+/* CATEGORY GRID */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.cat-card{
+background:var(–card);border-radius:16px;padding:14px 12px;cursor:pointer;
+border:1px solid transparent;transition:all 0.2s;
+}
+.cat-card:active{transform:scale(0.97);}
+.cat-icon{font-size:22px;margin-bottom:6px;}
+.cat-name{font-size:12px;font-weight:800;margin-bottom:6px;line-height:1.2;}
+.cat-pct{font-size:18px;font-weight:900;}
+
+/* TIP CARD */
+.tip-card{
+background:linear-gradient(135deg,#0d1a1f,#0a1520);
+border:1px solid rgba(0,180,216,0.3);
+border-radius:18px;padding:16px;margin-bottom:12px;
+}
+.tip-title{font-size:13px;font-weight:800;color:var(–blue);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.tip-text{font-size:12px;color:#ccc;line-height:1.6;}
+
+/* TASKS TAB */
+.task-cat-card{
+background:var(–card);border-radius:18px;padding:16px;margin-bottom:10px;cursor:pointer;
+border:1px solid #222;transition:all 0.2s;display:flex;align-items:center;gap:14px;
+}
+.task-cat-card:active{transform:scale(0.98);background:var(–card2);}
+.task-cat-icon{font-size:28px;flex-shrink:0;}
+.task-cat-info{flex:1;min-width:0;}
+.task-cat-name{font-size:15px;font-weight:800;margin-bottom:4px;}
+.task-cat-count{font-size:11px;color:var(–sub);}
+.task-cat-pct{font-size:20px;font-weight:900;flex-shrink:0;}
+
+/* TASK DETAIL */
+#task-detail{display:none;padding:0 14px 8px;}
+.back-btn{
+display:flex;align-items:center;gap:8px;background:transparent;border:none;
+color:var(–pink);font-family:‘Nunito’,sans-serif;font-size:15px;font-weight:800;
+cursor:pointer;padding:10px 0 14px;
+}
+.task-item{
+background:var(–card);border-radius:16px;padding:14px;margin-bottom:10px;
+border:1px solid #222;
+}
+.task-item-top{display:flex;align-items:flex-start;gap:10px;}
+.task-checkbox{
+width:22px;height:22px;border-radius:6px;border:2px solid var(–pink);
+flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+background:transparent;transition:all 0.2s;margin-top:1px;
+}
+.task-checkbox.checked{background:var(–pink);border-color:var(–pink);}
+.task-checkbox.checked::after{content:‘✓’;color:#fff;font-size:13px;font-weight:900;}
+.task-info{flex:1;min-width:0;}
+.task-name{font-size:14px;font-weight:800;line-height:1.3;}
+.task-time{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:3px 0;opacity:0.7;}
+.task-detail-txt{font-size:12px;color:#bbb;line-height:1.5;margin-top:6px;}
+.task-remove{
+background:transparent;border:1px solid #333;border-radius:8px;
+color:#666;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;
+font-family:‘Nunito’,sans-serif;margin-top:8px;transition:all 0.2s;
+}
+.task-remove:active{background:#300;border-color:#f44;color:#f44;}
+
+/* ADD TASK */
+.add-task-btn{
+width:100%;padding:14px;border-radius:14px;border:2px dashed var(–pink);
+background:transparent;color:var(–pink);font-family:‘Nunito’,sans-serif;
+font-size:14px;font-weight:800;cursor:pointer;margin-top:4px;
+}
+.add-task-form{background:var(–card2);border-radius:16px;padding:16px;margin-top:10px;}
+.form-input{
+width:100%;padding:12px;border-radius:10px;border:1px solid #333;
+background:#111;color:#fff;font-family:‘Nunito’,sans-serif;font-size:14px;
+margin-bottom:10px;outline:none;
+}
+.form-input:focus{border-color:var(–pink);}
+.form-submit{
+width:100%;padding:13px;border-radius:10px;border:none;
+background:linear-gradient(90deg,var(–pink),var(–pink2));
+color:#fff;font-family:‘Nunito’,sans-serif;font-size:15px;font-weight:800;cursor:pointer;
+}
+
+/* EXPERTS TAB */
+.expert-card{
+background:var(–card);border-radius:18px;margin-bottom:10px;overflow:hidden;
+border:1px solid #222;
+}
+.expert-header{
+display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;
+}
+.expert-emoji{font-size:26px;flex-shrink:0;}
+.expert-info{flex:1;}
+.expert-name{font-size:15px;font-weight:800;}
+.expert-role{font-size:11px;color:var(–sub);margin-top:2px;}
+.expert-chevron{color:var(–sub);font-size:16px;transition:transform 0.3s;flex-shrink:0;}
+.expert-card.open .expert-chevron{transform:rotate(180deg);}
+.expert-body{
+max-height:0;overflow:hidden;transition:max-height 0.35s ease;
+padding:0 16px;
+}
+.expert-card.open .expert-body{max-height:600px;padding:0 16px 16px;}
+.expert-bullet{
+font-size:12px;color:#ccc;line-height:1.6;padding:5px 0;
+border-bottom:1px solid #222;display:flex;gap:8px;
+}
+.expert-bullet:last-child{border-bottom:none;}
+.bullet-dot{color:var(–pink);font-size:16px;flex-shrink:0;margin-top:-1px;}
+
+/* PROGRESS TAB */
+.score-section{display:flex;flex-direction:column;align-items:center;padding:20px 0 10px;}
+.score-label{font-size:28px;font-weight:900;}
+.score-sub{font-size:12px;color:var(–sub);margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
+.week-chart{background:var(–card);border-radius:18px;padding:16px;margin-bottom:12px;}
+.week-title{font-size:14px;font-weight:800;margin-bottom:14px;}
+.week-bars{display:flex;align-items:flex-end;gap:6px;height:80px;}
+.week-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.week-bar-bg{flex:1;width:100%;background:#222;border-radius:6px;display:flex;align-items:flex-end;overflow:hidden;}
+.week-bar-fill{width:100%;border-radius:6px;transition:height 0.5s ease;}
+.week-day{font-size:9px;color:var(–sub);font-weight:700;}
+.prog-section{background:var(–card);border-radius:18px;padding:16px;margin-bottom:12px;}
+.prog-row{margin-bottom:12px;}
+.prog-row:last-child{margin-bottom:0;}
+.prog-row-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.prog-row-name{font-size:12px;font-weight:800;}
+.prog-row-pct{font-size:12px;font-weight:700;}
+.steps-section{background:var(–card);border-radius:18px;padding:16px;margin-bottom:12px;}
+.steps-title{font-size:14px;font-weight:800;margin-bottom:10px;}
+.steps-count{font-size:36px;font-weight:900;color:var(–pink);text-align:center;margin:4px 0;}
+.steps-goal{font-size:11px;color:var(–sub);text-align:center;margin-bottom:10px;}
+.steps-btns{display:flex;gap:10px;}
+.steps-btn{
+flex:1;padding:12px;border-radius:12px;border:none;
+font-family:‘Nunito’,sans-serif;font-size:14px;font-weight:800;cursor:pointer;
+transition:transform 0.15s;
+}
+.steps-btn:active{transform:scale(0.96);}
+.steps-btn.add{background:linear-gradient(135deg,var(–pink),var(–pink2));color:#fff;}
+.steps-btn.sub{background:#222;color:var(–sub);}
+
+/* TOAST */
+#toast{
+position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);
+background:linear-gradient(90deg,var(–pink),var(–pink2));
+color:#fff;padding:12px 24px;border-radius:99px;
+font-size:14px;font-weight:800;z-index:999;
+opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;
+box-shadow:0 8px 24px rgba(255,45,107,0.5);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* SECTION TITLE */
+.sec-title{font-size:16px;font-weight:900;margin:14px 0 10px;color:var(–pink);}
+</style>
+
+</head>
+<body>
+
+<div id="app-header">
+  <svg class="header-avatar" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <ellipse cx="26" cy="44" rx="13" ry="8" fill="#FF2D6B" opacity="0.7"/>
+    <!-- Neck -->
+    <rect x="23" y="32" width="6" height="8" rx="3" fill="#FDBCB4"/>
+    <!-- Head -->
+    <circle cx="26" cy="24" r="12" fill="#FDBCB4"/>
+    <!-- Hair -->
+    <path d="M14 22 Q14 8 26 8 Q38 8 38 22 Q36 12 26 12 Q16 12 14 22Z" fill="#FFD700"/>
+    <path d="M14 22 Q12 28 14 34 Q17 26 16 20Z" fill="#FFD700"/>
+    <path d="M38 22 Q40 28 38 34 Q35 26 36 20Z" fill="#FFD700"/>
+    <!-- Sunglasses frame -->
+    <rect x="15" y="21" width="9" height="6" rx="3" fill="#FF2D6B" opacity="0.9"/>
+    <rect x="28" y="21" width="9" height="6" rx="3" fill="#FF2D6B" opacity="0.9"/>
+    <line x1="24" y1="24" x2="28" y2="24" stroke="#FF2D6B" stroke-width="1.5"/>
+    <!-- Lens tint -->
+    <rect x="16" y="22" width="7" height="4" rx="2" fill="#FF6B9D" opacity="0.6"/>
+    <rect x="29" y="22" width="7" height="4" rx="2" fill="#FF6B9D" opacity="0.6"/>
+    <!-- Smile -->
+    <path d="M22 30 Q26 34 30 30" stroke="#e0888a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Earrings -->
+    <circle cx="14" cy="26" r="1.5" fill="#FF2D6B"/>
+    <ellipse cx="14" cy="30" rx="1" ry="2.5" fill="#FF2D6B" opacity="0.8"/>
+    <circle cx="38" cy="26" r="1.5" fill="#FF2D6B"/>
+    <ellipse cx="38" cy="30" rx="1" ry="2.5" fill="#FF2D6B" opacity="0.8"/>
+  </svg>
+  <div class="header-text">
+    <div class="header-logo">Lauras World</div>
+    <div class="header-sub">Healing &middot; Strength &middot; Wellness</div>
+  </div>
+</div>
+
+<div id="tab-content">
+  <div id="tab-home" class="tab-page active"></div>
+  <div id="tab-tasks" class="tab-page"></div>
+  <div id="task-detail"></div>
+  <div id="tab-experts" class="tab-page"></div>
+  <div id="tab-progress" class="tab-page"></div>
+</div>
+
+<div id="bottom-nav">
+  <button class="nav-btn active" onclick="switchTab('home',this)" id="nav-home">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
+  </button>
+  <button class="nav-btn" onclick="switchTab('tasks',this)" id="nav-tasks">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11l-4 4-1.5-1.5L9 8l3.5 3.5L19 5l1.5 1.5L12.5 15 9 11zM4 20h16v2H4v-2z" opacity="0"/><path d="M3 5h2v2H3zm4 0h14v2H7zM3 11h2v2H3zm4 0h14v2H7zM3 17h2v2H3zm4 0h14v2H7z"/></svg>
+    Tasks
+  </button>
+  <button class="nav-btn" onclick="switchTab('experts',this)" id="nav-experts">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    Experts
+  </button>
+  <button class="nav-btn" onclick="switchTab('progress',this)" id="nav-progress">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+    Progress
+  </button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ===================== DATA =====================
+var CATEGORIES = [
+  {
+    id:'supps',name:'Supplements',emoji:'💊',color:'#FF2D6B',
+    tasks:[
+      {id:'s1',name:'Vitamin D3 + K2 (5000 IU)',time:'Morning',detail:'Gary Brecka: D3 deficiency directly linked to autoimmune disorders and fatigue'},
+      {id:'s2',name:'Methylated B12 + B9 (L-5-MTHF)',time:'Morning',detail:'Gary Brecka: Bypasses MTHFR mutations. Brands: Thorne or Pure Encapsulations'},
+      {id:'s3',name:'Omega-3 Fish Oil (2000-3000mg)',time:'Morning',detail:'Anti-inflammatory, supports dryness and nerve repair. Take with a meal'},
+      {id:'s4',name:'Magnesium Glycinate (400mg)',time:'Evening',detail:'Dr. Berg: Calms nervous system, supports sleep'},
+      {id:'s5',name:'Probiotic L reuteri and B infantis',time:'Morning',detail:'Dr. Berg: Critical immune-regulating strains. Essential for T-reg cell function'},
+      {id:'s6',name:'Vitamin B1 Benfotiamine',time:'Morning',detail:'Dr. Berg: Fat-soluble B1 that penetrates nerves. Crucial for vagus nerve and ANS'},
+      {id:'s7',name:'Ashwagandha (600mg)',time:'Evening',detail:'Gary Brecka: Lowers cortisol by 30%, improves sleep, reduces anxiety'},
+      {id:'s8',name:'CoQ10 (200mg)',time:'Morning',detail:'Mitochondrial support for fatigue'},
+      {id:'s9',name:'Electrolytes LMNT or NormaLyte',time:'Morning',detail:'CRITICAL for POTS. Drink before getting out of bed'},
+      {id:'s10',name:'Vitamin C (1000mg)',time:'Morning',detail:'Dr. Ardis: Immune fortification, antioxidant protection'},
+      {id:'s11',name:'Taurine (500-1000mg)',time:'Afternoon',detail:'Dr. Ardis: Supports heart and autonomic nervous system'},
+      {id:'s12',name:'Zinc and Selenium',time:'Morning',detail:'Dr. Ardis: Daily immune stack for autoimmune and chronic inflammation'}
+    ]
+  },
+  {
+    id:'vagus',name:'Vagus Nerve',emoji:'🌬️',color:'#FF2D6B',
+    tasks:[
+      {id:'v1',name:'Morning Coherent Breathing 5 min',time:'Morning',detail:'Dave Asprey: 5-6 breaths per min, 5-6 sec inhale and exhale. 91% of dysautonomia patients restored ANS function'},
+      {id:'v2',name:'Diaphragmatic Breathing 10 min',time:'Morning',detail:'4 counts in, 6-8 counts out. Activates parasympathetic system'},
+      {id:'v3',name:'Cold Water Face Splash',time:'Morning',detail:'Activates dive reflex, directly tones vagus nerve'},
+      {id:'v4',name:'Humming or Gargling 5 min',time:'Morning',detail:'Vibrates vagus nerve in the throat. Gargle 30 sec x3 or hum a song'},
+      {id:'v5',name:'Singing',time:'Afternoon',detail:'Same vagal mechanism as humming. Play your favorite music and sing'},
+      {id:'v6',name:'Evening Wind-Down Breathing',time:'Evening',detail:'Coherent breathing before bed. Shifts out of fight-or-flight'},
+      {id:'v7',name:'Meditation or Mindfulness 10 min',time:'Evening',detail:'Insight Timer or Othership app'}
+    ]
+  },
+  {
+    id:'hydro',name:'Hydration',emoji:'💧',color:'#00B4D8',
+    tasks:[
+      {id:'h1',name:'Pre-Rise 500ml electrolyte water',time:'Morning',detail:'Drink BEFORE standing up. Non-negotiable for POTS'},
+      {id:'h2',name:'Morning Rise Routine ankle pumps',time:'Morning',detail:'10 ankle pumps then sit on bed edge 60 sec BEFORE standing'},
+      {id:'h3',name:'Water Goal 2.5 liters today',time:'All Day',detail:'Add electrolytes to at least 2 glasses'},
+      {id:'h4',name:'Celtic Sea Salt on meals',time:'All Day',detail:'More sodium helps retain fluid and stabilize POTS symptoms'},
+      {id:'h5',name:'Compression garments before standing',time:'Morning',detail:'Put on compression stockings BEFORE getting out of bed'},
+      {id:'h6',name:'Afternoon electrolyte drink',time:'Afternoon',detail:'Second electrolyte dose mid-afternoon'}
+    ]
+  },
+  {
+    id:'diet',name:'Anti-Inflam Diet',emoji:'🥗',color:'#00C853',
+    tasks:[
+      {id:'d1',name:'Small frequent meals only',time:'All Day',detail:'Large meals worsen GI dysmotility and POTS. Aim for 5-6 small meals'},
+      {id:'d2',name:'Omega-3 protein salmon and sardines',time:'Lunch',detail:'Anti-inflammatory fats. At least 3x per week'},
+      {id:'d3',name:'Colorful veggies spinach and beets',time:'Lunch',detail:'Aim for 5 or more colors daily'},
+      {id:'d4',name:'Berries blueberries and cherries',time:'Morning',detail:'High antioxidant density. Add to smoothie or eat as snack'},
+      {id:'d5',name:'Bone broth or fermented food',time:'Lunch',detail:'Bone broth heals gut lining. Kimchi and sauerkraut repopulate gut'},
+      {id:'d6',name:'Turmeric and black pepper',time:'All Day',detail:'Black pepper increases curcumin absorption by 2000 percent'},
+      {id:'d7',name:'NO caffeine today',time:'All Day',detail:'POTS trigger. Replace with herbal tea'},
+      {id:'d8',name:'NO refined sugar today',time:'All Day',detail:'Sugar fuels inflammation and feeds harmful gut bacteria'},
+      {id:'d9',name:'Gluten-free today',time:'All Day',detail:'Dr. Berg: Gluten is a primary gut permeability trigger'}
+    ]
+  },
+  {
+    id:'move',name:'Movement',emoji:'🏃‍♀️',color:'#7C4DFF',
+    tasks:[
+      {id:'m1',name:'Horizontal exercise swim or recumbent bike',time:'Morning',detail:'POTS Protocol: Upright exercise triggers symptoms. Start horizontal'},
+      {id:'m2',name:'Gentle floor stretching 10 min',time:'Morning',detail:'Legs-up-the-wall pose is especially good for venous return'},
+      {id:'m3',name:'Short walk 5-15 min',time:'Afternoon',detail:'Wear compression. Stop if dizzy. Progress weekly'},
+      {id:'m4',name:'Legs-up-the-wall pose 10 min',time:'Evening',detail:'Drains blood from legs back to core. Helps POTS immediately'},
+      {id:'m5',name:'No prolonged standing',time:'All Day',detail:'Avoid standing still for more than a few minutes'}
+    ]
+  },
+  {
+    id:'sleep',name:'Sleep',emoji:'🌙',color:'#FF9800',
+    tasks:[
+      {id:'sl1',name:'Screens off 1 hour before bed',time:'Evening',detail:'Blue light suppresses melatonin and keeps ANS activated'},
+      {id:'sl2',name:'Head of bed elevated 4-6 inches',time:'Evening',detail:'Reduces nighttime POTS symptoms and acid reflux'},
+      {id:'sl3',name:'Room cool 65-68F and dark',time:'Evening',detail:'Heat worsens POTS. Blackout curtains recommended'},
+      {id:'sl4',name:'Consistent sleep and wake time',time:'Evening',detail:'Irregular sleep destroys circadian rhythm and spikes inflammation'},
+      {id:'sl5',name:'Magnesium glycinate before bed',time:'Evening',detail:'400mg 30 min before sleep. Deepens sleep, reduces cortisol'},
+      {id:'sl6',name:'Target 8-9 hours tonight',time:'Evening',detail:'Sleep debt drives autoimmune flares. Non-negotiable'}
+    ]
+  },
+  {
+    id:'bio',name:'Biohacks',emoji:'⚡',color:'#FFD600',
+    tasks:[
+      {id:'b1',name:'Red Light Therapy 10-20 min',time:'Morning',detail:'Dave Asprey: Reduces inflammation, promotes cellular healing'},
+      {id:'b2',name:'Far-Infrared Sauna 10-15 min',time:'Afternoon',detail:'Powerful for inflammation. POTS caution: stay hydrated'},
+      {id:'b3',name:'HRV Check',time:'Morning',detail:'Heart Rate Variability measures vagal tone. App: Welltory or WHOOP'},
+      {id:'b4',name:'Gratitude or Journaling 5 min',time:'Evening',detail:'Write 3 things grateful for. Reduces cortisol'},
+      {id:'b5',name:'Morning Sunlight 10-15 min',time:'Morning',detail:'Natural Vitamin D synthesis and circadian rhythm reset'}
+    ]
+  }
+];
+
+var QUOTES = [
+  'Every small step forward is a victory worth celebrating.',
+  'Your body is healing more than you know. Trust the process.',
+  'Strength is not the absence of struggle. It is rising through it.',
+  'You are not your diagnosis. You are so much more.',
+  'Rest is productive. Recovery is real work.',
+  'Today I choose healing. Today I choose myself.',
+  'Progress is progress, no matter how slow.',
+  'You have survived 100% of your hard days. This one is no different.'
+];
+
+var EXPERTS = [
+  {
+    name:'Gary Brecka',
+    role:'Human Biologist, The Ultimate Human',
+    emoji:'🧬',color:'#FF2D6B',
+    bullets:[
+      'Autoimmune diseases are the immune system responding to hidden pathogens including mold, mycotoxins, parasites, viruses and heavy metals',
+      'Fix deficiencies first then biohack. Bloodwork and genetics guide all supplementation',
+      'Vitamin D3 5000 IU plus K2 200mcg MK7 - 90% of people are deficient, linked to fatigue and autoimmune disorders',
+      'Methylated B12 plus B9 L-5-MTHF - 40% have MTHFR mutations and bioactive forms bypass this',
+      'Ashwagandha 600mg per day clinically lowers cortisol by 30%, improves sleep, reduces inflammation',
+      'Electrolytes over sports drinks - sodium, potassium, magnesium without sugar, critical for POTS',
+      'Chronic high cortisol blocks ALL healing and stress overrides diet, fasting and exercise'
+    ]
+  },
+  {
+    name:'Dr. Eric Berg DC',
+    role:'The Knowledge Doc, 14.5M YouTube subscribers',
+    emoji:'📚',color:'#FF6B9D',
+    bullets:[
+      'Vitamin D3 at 8000-10000 IU is the most powerful T-reg cell activator and directly fights autoimmune disease',
+      'Poor gut health blocks Vitamin D absorption creating the perfect storm for autoimmune disease',
+      'L reuteri and B infantis are the two most critical immune-regulating probiotic strains, depleted by antibiotics and glyphosate',
+      'Vitamin B1 Benfotiamine, fat-soluble form, penetrates nerves and is crucial for the autonomic nervous system and vagus nerve',
+      'Leaky gut drives autoimmunity - gluten, refined sugar, seed oils and alcohol are the primary triggers',
+      'Fermented foods daily including sauerkraut, kimchi, miso and kefir repopulate beneficial bacteria'
+    ]
+  },
+  {
+    name:'Dave Asprey',
+    role:'Father of Biohacking, Bulletproof',
+    emoji:'⚡',color:'#FF2D6B',
+    bullets:[
+      'Vagus nerve stimulation reduces inflammation and may replace drugs in autoimmune conditions',
+      'Coherent breathing at 5-6 breaths per minute - 91% of dysautonomia patients restored ANS regulation in just 5 minutes',
+      'Cold thermogenesis - cold shower or face in cold water directly improves vagal tone',
+      'HRV training - high vagal tone equals better immunity, metabolism and emotional stability',
+      'Chronic stress overrides everything - perfect diet and exercise will not work if stuck in fight-or-flight',
+      'Red light therapy reduces inflammation and promotes tissue healing at cellular level'
+    ]
+  },
+  {
+    name:'Dr. Brian Ardis',
+    role:'Chiropractor and Health Freedom Advocate',
+    emoji:'🌿',color:'#FF9800',
+    bullets:[
+      'Vitamin C 1000mg daily is immune fortification and a daily essential for autoimmune conditions',
+      'Vitamin D3 5000-10000 IU is critical for immune regulation and autoimmune disease',
+      'Taurine 500-1000mg supports heart function and autonomic nervous system health',
+      'Selenium and Zinc are the core daily immune stack for chronic inflammation',
+      'NAC N-Acetyl Cysteine supports blood health, detox and immune modulation',
+      'Sugar is the number one immune system destroyer and eliminates white blood cell function for hours'
+    ]
+  },
+  {
+    name:'Brigham Buhler',
+    role:'Founder Ways2Well, Functional and Regenerative Care',
+    emoji:'🔬',color:'#7C4DFF',
+    bullets:[
+      'Comprehensive bloodwork is the first step because standard labs miss the picture and deep panels reveal root causes',
+      'Peptide Therapy BPC-157 repairs gut lining, reduces systemic inflammation and supports tissue healing',
+      'Hormone optimization is critical because imbalanced hormones drive fatigue and immune dysfunction',
+      'The healthcare system profits from keeping you sick and primary care averages only 8 minutes per patient',
+      'Ways2Well works virtually through telehealth plus Quest Diagnostics labs anywhere',
+      'Preventative not reactive - identify and correct markers BEFORE they become crises'
+    ]
+  }
+];
+
+// ===================== STATE =====================
+var state = {
+  date: '',
+  completions: {},
+  water: 0,
+  steps: 0,
+  weekData: [0,0,0,0,0,0,0]
+};
+
+function todayKey() {
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+
+function loadState() {
+  var saved = localStorage.getItem('lauras_world_v2');
+  var today = todayKey();
+  if (saved) {
+    var parsed = JSON.parse(saved);
+    if (parsed.date === today) {
+      state = parsed;
+    } else {
+      // New day - reset daily but keep week data
+      var prevData = parsed.weekData || [0,0,0,0,0,0,0];
+      var prevScore = calcScore(parsed.completions || {});
+      // Shift week data
+      prevData.shift();
+      prevData.push(prevScore);
+      state.weekData = prevData;
+      state.date = today;
+      state.completions = {};
+      state.water = 0;
+      state.steps = 0;
+      saveState();
+    }
+  } else {
+    state.date = today;
+    saveState();
+  }
+}
+
+function saveState() {
+  state.date = todayKey();
+  localStorage.setItem('lauras_world_v2', JSON.stringify(state));
+}
+
+function calcScore(completions) {
+  var total = 0;
+  var done = 0;
+  for (var i = 0; i < CATEGORIES.length; i++) {
+    var cat = CATEGORIES[i];
+    for (var j = 0; j < cat.tasks.length; j++) {
+      total++;
+      if (completions[cat.tasks[j].id]) done++;
+    }
+  }
+  return total > 0 ? Math.round((done/total)*100) : 0;
+}
+
+function getCatStats(catId) {
+  var cat = null;
+  for (var i = 0; i < CATEGORIES.length; i++) {
+    if (CATEGORIES[i].id === catId) { cat = CATEGORIES[i]; break; }
+  }
+  if (!cat) return {done:0,total:0,pct:0};
+  var total = cat.tasks.length;
+  var done = 0;
+  for (var j = 0; j < cat.tasks.length; j++) {
+    if (state.completions[cat.tasks[j].id]) done++;
+  }
+  return {done:done, total:total, pct: total > 0 ? Math.round((done/total)*100) : 0};
+}
+
+function getTotalStats() {
+  var total = 0, done = 0;
+  for (var i = 0; i < CATEGORIES.length; i++) {
+    var cat = CATEGORIES[i];
+    for (var j = 0; j < cat.tasks.length; j++) {
+      total++;
+      if (state.completions[cat.tasks[j].id]) done++;
+    }
+  }
+  return {done:done, left:total-done, total:total, pct: total > 0 ? Math.round((done/total)*100) : 0};
+}
+
+// ===================== UI HELPERS =====================
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+function makeProgBar(pct, color) {
+  return '<div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:' + pct + '%;background:' + color + ';"></div></div>';
+}
+
+function makeRing(pct, color, size, stroke) {
+  size = size || 120;
+  stroke = stroke || 10;
+  var r = (size/2) - stroke;
+  var circ = 2 * Math.PI * r;
+  var dash = (pct/100) * circ;
+  var cx = size/2;
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">'
+    + '<circle cx="' + cx + '" cy="' + cx + '" r="' + r + '" fill="none" stroke="#222" stroke-width="' + stroke + '"/>'
+    + '<circle cx="' + cx + '" cy="' + cx + '" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="' + stroke + '"'
+    + ' stroke-dasharray="' + dash + ' ' + circ + '" stroke-dashoffset="0" stroke-linecap="round"'
+    + ' transform="rotate(-90 ' + cx + ' ' + cx + ')"/>'
+    + '<text x="' + cx + '" y="' + (cx+2) + '" text-anchor="middle" dominant-baseline="middle" fill="' + color + '" font-size="' + Math.round(size*0.2) + '" font-weight="900" font-family="Nunito,sans-serif">' + pct + '%</text>'
+    + '</svg>';
+}
+
+function getDateStr() {
+  var d = new Date();
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate();
+}
+
+// ===================== TAB SWITCHING =====================
+var currentTab = 'home';
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-page').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('task-detail').style.display = 'none';
+  var page = document.getElementById('tab-' + name);
+  if (page) page.classList.add('active');
+  if (btn) btn.classList.add('active');
+  currentTab = name;
+  if (name === 'home') renderHome();
+  if (name === 'tasks') renderTaskList();
+  if (name === 'experts') renderExperts();
+  if (name === 'progress') renderProgress();
+  document.getElementById('tab-content').scrollTop = 0;
+}
+
+// ===================== HOME TAB =====================
+function renderHome() {
+  var el = document.getElementById('tab-home');
+  var stats = getTotalStats();
+  var pct = stats.pct;
+  var ringColor = pct >= 80 ? '#00C853' : (pct >= 50 ? '#FFD600' : '#FF2D6B');
+  var quote = QUOTES[new Date().getDay() % QUOTES.length];
+  var waterPct = Math.min(100, Math.round((state.water/10)*100));
+  var html = '';
+
+  // Hero
+  html += '<div class="hero-card">'
+    + '<div class="hero-greeting">Hey <span>Laura!</span> &#x1F338;</div>'
+    + '<div class="hero-date">' + getDateStr() + '</div>'
+    + '<div class="hero-quote">' + quote + '</div>'
+    + '</div>';
+
+  // Ring + stats
+  html += '<div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;background:var(--card);border-radius:18px;padding:16px;">'
+    + '<div class="ring-wrap" style="margin:0;flex-shrink:0;">'
+    + makeRing(pct, ringColor, 110, 10)
+    + '<div class="ring-label">Todays Healing</div>'
+    + '</div>'
+    + '<div style="flex:1;">'
+    + '<div style="display:flex;flex-direction:column;gap:8px;">'
+    + '<div class="card2" style="margin:0;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;">'
+    + '<span style="font-size:12px;color:var(--sub);font-weight:700;">Done</span>'
+    + '<span style="font-size:20px;font-weight:900;color:#00C853;">' + stats.done + '</span>'
+    + '</div>'
+    + '<div class="card2" style="margin:0;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;">'
+    + '<span style="font-size:12px;color:var(--sub);font-weight:700;">Left</span>'
+    + '<span style="font-size:20px;font-weight:900;color:#FF2D6B;">' + stats.left + '</span>'
+    + '</div>'
+    + '<div class="card2" style="margin:0;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;">'
+    + '<span style="font-size:12px;color:var(--sub);font-weight:700;">Steps</span>'
+    + '<span style="font-size:20px;font-weight:900;color:#FFD600;">' + state.steps + '</span>'
+    + '</div>'
+    + '</div>'
+    + '</div>'
+    + '</div>';
+
+  // Water
+  html += '<div class="water-track">'
+    + '<div class="water-title">&#x1F4A7; Water Intake</div>'
+    + '<div class="water-btns">'
+    + '<button class="btn-circle" onclick="waterChange(-1)">-</button>'
+    + '<div><div class="water-count">' + state.water + '</div><div class="water-sub">of 10 glasses</div></div>'
+    + '<button class="btn-circle" onclick="waterChange(1)">+</button>'
+    + '</div>'
+    + makeProgBar(waterPct, 'linear-gradient(90deg,#00B4D8,#48cae4)')
+    + '</div>';
+
+  // Category grid
+  html += '<div class="sec-title">Todays Categories</div>';
+  html += '<div class="cat-grid">';
+  for (var i = 0; i < CATEGORIES.length; i++) {
+    var cat = CATEGORIES[i];
+    var cs = getCatStats(cat.id);
+    html += '<div class="cat-card" onclick="openCategoryFromHome(\'' + cat.id + '\')" style="border-color:' + cat.color + '22;">'
+      + '<div class="cat-icon">' + cat.emoji + '</div>'
+      + '<div class="cat-name">' + cat.name + '</div>'
+      + '<div class="cat-pct" style="color:' + cat.color + ';">' + cs.pct + '%</div>'
+      + makeProgBar(cs.pct, cat.color)
+      + '</div>';
+  }
+  html += '</div>';
+
+  // POTS tip
+  html += '<div class="tip-card">'
+    + '<div class="tip-title">&#x26A1; POTS Morning Protocol</div>'
+    + '<div class="tip-text">'
+    + '1. Drink electrolytes BEFORE getting up<br>'
+    + '2. Do 10 ankle pumps in bed<br>'
+    + '3. Sit at bed edge for 60 seconds<br>'
+    + '4. Put on compression stockings while seated<br>'
+    + '5. Rise slowly and have a wall or chair nearby'
+    + '</div>'
+    + '</div>';
+
+  el.innerHTML = html;
+}
+
+function openCategoryFromHome(catId) {
+  switchTab('tasks', document.getElementById('nav-tasks'));
+  setTimeout(function(){ openCategory(catId); }, 50);
+}
+
+function waterChange(delta) {
+  state.water = Math.max(0, Math.min(20, state.water + delta));
+  saveState();
+  renderHome();
+  if (state.water === 10) showToast('Hydration goal reached! Amazing!');
+}
+
+// ===================== TASKS TAB =====================
+function renderTaskList() {
+  document.getElementById('task-detail').style.display = 'none';
+  document.getElementById('tab-tasks').classList.add('active');
+  var el = document.getElementById('tab-tasks');
+  var html = '<div class="sec-title">Task Categories</div>';
+  for (var i = 0; i < CATEGORIES.length; i++) {
+    var cat = CATEGORIES[i];
+    var cs = getCatStats(cat.id);
+    html += '<div class="task-cat-card" onclick="openCategory(\'' + cat.id + '\')">'
+      + '<div class="task-cat-icon">' + cat.emoji + '</div>'
+      + '<div class="task-cat-info">'
+      + '<div class="task-cat-name" style="color:' + cat.color + ';">' + cat.name + '</div>'
+      + '<div class="task-cat-count">' + cs.done + ' of ' + cs.total + ' completed</div>'
+      + makeProgBar(cs.pct, cat.color)
+      + '</div>'
+      + '<div class="task-cat-pct" style="color:' + cat.color + ';">' + cs.pct + '%</div>'
+      + '</div>';
+  }
+  el.innerHTML = html;
+}
+
+function openCategory(catId) {
+  var cat = null;
+  for (var i = 0; i < CATEGORIES.length; i++) {
+    if (CATEGORIES[i].id === catId) { cat = CATEGORIES[i]; break; }
+  }
+  if (!cat) return;
+
+  document.querySelectorAll('.tab-page').forEach(function(el){ el.classList.remove('active'); });
+  var detail = document.getElementById('task-detail');
+  detail.style.display = 'block';
+
+  var html = '<button class="back-btn" onclick="backToCategories()">'
+    + '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>'
+    + 'Back'
+    + '</button>';
+
+  html += '<div style="font-size:20px;font-weight:900;color:' + cat.color + ';margin-bottom:14px;">'
+    + cat.emoji + ' ' + cat.name
+    + '</div>';
+
+  for (var j = 0; j < cat.tasks.length; j++) {
+    var task = cat.tasks[j];
+    var checked = state.completions[task.id] ? true : false;
+    html += renderTaskItem(task, checked, cat.color);
+  }
+
+  html += '<button class="add-task-btn" onclick="toggleAddForm(\'' + catId + '\')">+ Add Custom Task</button>';
+  html += '<div id="add-form-' + catId + '" style="display:none;">';
+  html += '<div class="add-task-form">'
+    + '<input class="form-input" id="task-name-' + catId + '" placeholder="Task name" type="text">'
+    + '<textarea class="form-input" id="task-detail-' + catId + '" placeholder="Details / notes" rows="3" style="resize:none;"></textarea>'
+
+```
++ '<button class="form-submit" onclick="addCustomTask(\'' + catId + '\')">Add Task</button>'
++ '</div>';
+```
+
+html += ‘</div>’;
+
+detail.innerHTML = html;
+document.getElementById(‘tab-content’).scrollTop = 0;
+}
+
+function renderTaskItem(task, checked, color) {
+var chkClass = checked ? ‘task-checkbox checked’ : ‘task-checkbox’;
+return ‘<div class="task-item" id="item-' + task.id + '">’
++ ‘<div class="task-item-top">’
++ ‘<div class="' + chkClass + '" onclick="toggleTask(\'' + task.id + '\')" id="chk-' + task.id + '"></div>’
++ ‘<div class="task-info">’
++ ‘<div class="task-name" style="' + (checked ? 'opacity:0.5;text-decoration:line-through;' : '') + '">’ + task.name + ‘</div>’
++ ‘<div class="task-time" style="color:' + color + ';">’ + task.time + ‘</div>’
++ ‘<div class="task-detail-txt">’ + task.detail + ‘</div>’
++ ‘</div>’
++ ‘</div>’
++ ‘<button class="task-remove" onclick="removeTask(\'' + task.id + '\')">Remove</button>’
++ ‘</div>’;
+}
+
+function toggleTask(taskId) {
+state.completions[taskId] = !state.completions[taskId];
+saveState();
+var chk = document.getElementById(‘chk-’ + taskId);
+var item = document.getElementById(‘item-’ + taskId);
+if (chk && item) {
+if (state.completions[taskId]) {
+chk.classList.add(‘checked’);
+item.querySelector(’.task-name’).style.opacity = ‘0.5’;
+item.querySelector(’.task-name’).style.textDecoration = ‘line-through’;
+showToast(‘Great job! Keep it up! ‘);
+} else {
+chk.classList.remove(‘checked’);
+item.querySelector(’.task-name’).style.opacity = ‘1’;
+item.querySelector(’.task-name’).style.textDecoration = ‘none’;
+}
+}
+}
+
+function removeTask(taskId) {
+// Remove from category tasks
+for (var i = 0; i < CATEGORIES.length; i++) {
+var cat = CATEGORIES[i];
+for (var j = 0; j < cat.tasks.length; j++) {
+if (cat.tasks[j].id === taskId) {
+cat.tasks.splice(j, 1);
+break;
+}
+}
+}
+delete state.completions[taskId];
+saveState();
+var el = document.getElementById(‘item-’ + taskId);
+if (el) el.remove();
+}
+
+function backToCategories() {
+document.getElementById(‘task-detail’).style.display = ‘none’;
+document.getElementById(‘tab-tasks’).classList.add(‘active’);
+renderTaskList();
+}
+
+function toggleAddForm(catId) {
+var f = document.getElementById(‘add-form-’ + catId);
+if (f) f.style.display = f.style.display === ‘none’ ? ‘block’ : ‘none’;
+}
+
+function addCustomTask(catId) {
+var nameEl = document.getElementById(‘task-name-’ + catId);
+var detailEl = document.getElementById(‘task-detail-’ + catId);
+if (!nameEl || !nameEl.value.trim()) { showToast(‘Please enter a task name’); return; }
+var newTask = {
+id: ‘custom_’ + Date.now(),
+name: nameEl.value.trim(),
+time: ‘Any Time’,
+detail: detailEl ? detailEl.value.trim() : ‘’
+};
+for (var i = 0; i < CATEGORIES.length; i++) {
+if (CATEGORIES[i].id === catId) {
+CATEGORIES[i].tasks.push(newTask);
+break;
+}
+}
+nameEl.value = ‘’;
+if (detailEl) detailEl.value = ‘’;
+saveState();
+openCategory(catId);
+showToast(‘Task added!’);
+}
+
+// ===================== EXPERTS TAB =====================
+function renderExperts() {
+var el = document.getElementById(‘tab-experts’);
+var html = ‘<div class="sec-title">Your Expert Team</div>’;
+for (var i = 0; i < EXPERTS.length; i++) {
+var exp = EXPERTS[i];
+html += ‘<div class="expert-card" id="exp-' + i + '">’
++ ‘<div class="expert-header" onclick="toggleExpert(' + i + ')">’
++ ‘<div class="expert-emoji">’ + exp.emoji + ‘</div>’
++ ‘<div class="expert-info">’
++ ‘<div class="expert-name" style="color:' + exp.color + ';">’ + exp.name + ‘</div>’
++ ‘<div class="expert-role">’ + exp.role + ‘</div>’
++ ‘</div>’
++ ‘<div class="expert-chevron">▼</div>’
++ ‘</div>’
++ ‘<div class="expert-body">’;
+for (var j = 0; j < exp.bullets.length; j++) {
+html += ‘<div class="expert-bullet"><span class="bullet-dot" style="color:' + exp.color + ';">•</span><span>’ + exp.bullets[j] + ‘</span></div>’;
+}
+html += ‘</div></div>’;
+}
+el.innerHTML = html;
+}
+
+function toggleExpert(idx) {
+var card = document.getElementById(‘exp-’ + idx);
+if (card) card.classList.toggle(‘open’);
+}
+
+// ===================== PROGRESS TAB =====================
+function renderProgress() {
+var el = document.getElementById(‘tab-progress’);
+var score = calcScore(state.completions);
+var ringColor = score >= 80 ? ‘#00C853’ : (score >= 50 ? ‘#FFD600’ : ‘#FF2D6B’);
+var days = [‘Mon’,‘Tue’,‘Wed’,‘Thu’,‘Fri’,‘Sat’,‘Sun’];
+var maxVal = 100;
+var stepsPct = Math.min(100, Math.round((state.steps/5000)*100));
+
+var html = ‘’;
+
+// Score ring
+html += ‘<div class="score-section">’
++ makeRing(score, ringColor, 150, 14)
++ ‘<div class="score-sub">Healing Score Today</div>’
++ ‘</div>’;
+
+// Week chart
+html += ‘<div class="week-chart">’
++ ‘<div class="week-title">📅 Weekly Progress</div>’
++ ‘<div class="week-bars">’;
+var weekDisplay = state.weekData.slice(0,6).concat([score]);
+for (var i = 0; i < 7; i++) {
+var val = weekDisplay[i] || 0;
+var barH = Math.round((val/maxVal)*100);
+var bc = val >= 80 ? ‘#00C853’ : (val >= 50 ? ‘#FFD600’ : ‘#FF2D6B’);
+html += ‘<div class="week-bar-wrap">’
++ ‘<div class="week-bar-bg">’
++ ‘<div class="week-bar-fill" style="height:' + barH + '%;background:' + bc + ';"></div>’
++ ‘</div>’
++ ‘<div class="week-day">’ + days[i] + ‘</div>’
++ ‘</div>’;
+}
+html += ‘</div></div>’;
+
+// Category progress
+html += ‘<div class="prog-section"><div class="sec-title" style="margin-top:0;">Category Progress</div>’;
+for (var ci = 0; ci < CATEGORIES.length; ci++) {
+var cat = CATEGORIES[ci];
+var cs = getCatStats(cat.id);
+html += ‘<div class="prog-row">’
++ ‘<div class="prog-row-top">’
++ ‘<div class="prog-row-name">’ + cat.emoji + ’ ’ + cat.name + ‘</div>’
++ ‘<div class="prog-row-pct" style="color:' + cat.color + ';">’ + cs.pct + ‘%</div>’
++ ‘</div>’
++ makeProgBar(cs.pct, cat.color)
++ ‘</div>’;
+}
+html += ‘</div>’;
+
+// Steps
+html += ‘<div class="steps-section">’
++ ‘<div class="steps-title">🦶 Daily Steps</div>’
++ ‘<div class="steps-count">’ + state.steps.toLocaleString() + ‘</div>’
++ ‘<div class="steps-goal">Goal: 5,000 steps</div>’
++ makeProgBar(stepsPct, ‘linear-gradient(90deg,#7C4DFF,#b39ddb)’)
++ ‘<div style="height:12px;"></div>’
++ ‘<div class="steps-btns">’
++ ‘<button class="steps-btn sub" onclick="stepsChange(-250)">-250</button>’
++ ‘<button class="steps-btn add" onclick="stepsChange(250)">+250</button>’
++ ‘</div>’
++ ‘</div>’;
+
+el.innerHTML = html;
+}
+
+function stepsChange(delta) {
+state.steps = Math.max(0, state.steps + delta);
+saveState();
+renderProgress();
+if (state.steps >= 5000 && state.steps - delta < 5000) showToast(‘Step goal reached! You crushed it!’);
+}
+
+// ===================== INIT =====================
+loadState();
+renderHome();
+renderExperts();
+
+// PWA Service Worker inline
+if (‘serviceWorker’ in navigator) {
+var swCode = ‘self.addEventListener(“install”,function(e){self.skipWaiting();});’
++ ‘self.addEventListener(“activate”,function(e){e.waitUntil(clients.claim());});’
++ ‘self.addEventListener(“fetch”,function(e){e.respondWith(fetch(e.request).catch(function(){return new Response(“Offline”);}));});’;
+var blob = new Blob([swCode], {type:‘application/javascript’});
+var swUrl = URL.createObjectURL(blob);
+navigator.serviceWorker.register(swUrl).catch(function(){});
+}
+</script>
+
+<!-- PWA Manifest inline -->
+
+<script>
+var manifest = {
+  name: 'Lauras World',
+  short_name: 'Lauras World',
+  start_url: '.',
+  display: 'standalone',
+  background_color: '#0a0a0a',
+  theme_color: '#FF2D6B',
+  icons: [
+    {src:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="%230a0a0a"/><text y="130" x="96" text-anchor="middle" font-size="120">🌸</text></svg>',sizes:'192x192',type:'image/svg+xml'},
+    {src:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="%230a0a0a"/><text y="360" x="256" text-anchor="middle" font-size="320">🌸</text></svg>',sizes:'512x512',type:'image/svg+xml'}
+  ]
+};
+var mBlob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+var mUrl = URL.createObjectURL(mBlob);
+var mLink = document.createElement('link');
+mLink.rel = 'manifest';
+mLink.href = mUrl;
+document.head.appendChild(mLink);
+</script>
+
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230a0a0a'/><text y='130' x='90' text-anchor='middle' font-size='110'>🌸</text></svg>">
+
+</body>
+</html>

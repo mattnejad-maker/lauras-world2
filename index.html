@@ -417,27 +417,7 @@ h+=”<div class='tcp' style='color:"+cat.color+";'>”+cs.p+”%</div></div>”
 }
 el.innerHTML=h;
 }
-function opencat(id){
-var cat=null;for(var i=0;i<CATS.length;i++)if(CATS[i].id===id){cat=CATS[i];break;}
-if(!cat)return;
-document.querySelectorAll(”.pg”).forEach(function(e){e.classList.remove(“on”);});
-var det=document.getElementById(“det”);det.style.display=“block”;
-var h=”<button class='bbtn' onclick='backtocats()'>← Back</button>”;
-h+=”<div style='font-size:20px;font-weight:900;color:"+cat.color+";margin-bottom:14px;'>”+cat.emoji+” “+cat.name+”</div>”;
-for(var j=0;j<cat.tasks.length;j++){
-var tk=cat.tasks[j],ch=S.comp[tk.id]?true:false;
-h+=”<div class='ti' id='ti-"+tk.id+"'><div class='tt'>”;
-h+=”<div class='ck"+(ch?" on":"")+"' onclick='togck(\""+tk.id+"\")' id='ck-"+tk.id+"'></div>”;
-h+=”<div style='flex:1;'><div class='tn"+(ch?" dn":"")+"' id='tn-"+tk.id+"'>”+tk.name+”</div>”;
-h+=”<div class='tm' style='color:"+cat.color+";'>”+tk.time+”</div>”;
-h+=”<div class='td'>”+tk.detail+”</div></div></div>”;
-h+=”<button class='tr' onclick='rmtask(\""+tk.id+"\")'>Remove</button></div>”;
-}
-h+=”<button class='addb' onclick='togform(\""+id+"\")'>+ Add Custom Task</button>”;
-h+=”<div id='af-"+id+"' class='adf'><input class='fi' id='fn-"+id+"' placeholder='Task name' type='text'><textarea class='fi' id='fd-"+id+"' placeholder='Details' rows='3' style='resize:none;'></textarea><button class='fs' onclick='addtask(\""+id+"\")'>Add Task</button></div>”;
-det.innerHTML=h;
-document.getElementById(“content”).scrollTop=0;
-}
+
 function buildExperts(){
 var el=document.getElementById(“explist”);if(!el)return;
 var h=””;
